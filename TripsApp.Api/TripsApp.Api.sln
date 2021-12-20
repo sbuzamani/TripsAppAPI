@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.Api", "TripsApp.Api\TripsApp.Api.csproj", "{01C24AB0-9F53-4F23-B2AA-4C549B177DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.Domain", "TripsApp.Domain\TripsApp.Domain.csproj", "{A3BF7BE6-31F8-4205-9191-1FC597D059D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01C24AB0-9F53-4F23-B2AA-4C549B177DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C24AB0-9F53-4F23-B2AA-4C549B177DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C24AB0-9F53-4F23-B2AA-4C549B177DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C24AB0-9F53-4F23-B2AA-4C549B177DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3BF7BE6-31F8-4205-9191-1FC597D059D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3BF7BE6-31F8-4205-9191-1FC597D059D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3BF7BE6-31F8-4205-9191-1FC597D059D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3BF7BE6-31F8-4205-9191-1FC597D059D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D4AE105-4E89-42F8-A599-6B8BEA31BECE}
+	EndGlobalSection
+EndGlobal
