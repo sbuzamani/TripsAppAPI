@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.Api", "TripsApp.Api\TripsApp.Api.csproj", "{01C24AB0-9F53-4F23-B2AA-4C549B177DAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripsApp.Api", "TripsApp.Api\TripsApp.Api.csproj", "{01C24AB0-9F53-4F23-B2AA-4C549B177DAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.Domain", "TripsApp.Domain\TripsApp.Domain.csproj", "{A3BF7BE6-31F8-4205-9191-1FC597D059D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripsApp.Domain", "TripsApp.Domain\TripsApp.Domain.csproj", "{A3BF7BE6-31F8-4205-9191-1FC597D059D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.Tests", "TripsApp.Tests\TripsApp.Tests.csproj", "{D05EE24D-E4BE-454D-811B-F88BE7FE0B2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripsApp.Elasticsearch", "Trips.Elasticsearch\TripsApp.Elasticsearch.csproj", "{02E7DABA-7483-4197-B36C-A3B94CE7E740}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.UnitTests", "TripsApp.UnitTests\TripsApp.UnitTests.csproj", "{CA8FBB0F-610C-4720-9B30-EE89A8DCFF96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.ApplicationServices", "TripsApp.ApplicationServices\TripsApp.ApplicationServices.csproj", "{DD632481-AFE7-4BDE-91B8-D1E4CD2B152C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +27,18 @@ Global
 		{A3BF7BE6-31F8-4205-9191-1FC597D059D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3BF7BE6-31F8-4205-9191-1FC597D059D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3BF7BE6-31F8-4205-9191-1FC597D059D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D05EE24D-E4BE-454D-811B-F88BE7FE0B2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D05EE24D-E4BE-454D-811B-F88BE7FE0B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D05EE24D-E4BE-454D-811B-F88BE7FE0B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D05EE24D-E4BE-454D-811B-F88BE7FE0B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02E7DABA-7483-4197-B36C-A3B94CE7E740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E7DABA-7483-4197-B36C-A3B94CE7E740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E7DABA-7483-4197-B36C-A3B94CE7E740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E7DABA-7483-4197-B36C-A3B94CE7E740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8FBB0F-610C-4720-9B30-EE89A8DCFF96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8FBB0F-610C-4720-9B30-EE89A8DCFF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8FBB0F-610C-4720-9B30-EE89A8DCFF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8FBB0F-610C-4720-9B30-EE89A8DCFF96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD632481-AFE7-4BDE-91B8-D1E4CD2B152C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD632481-AFE7-4BDE-91B8-D1E4CD2B152C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD632481-AFE7-4BDE-91B8-D1E4CD2B152C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD632481-AFE7-4BDE-91B8-D1E4CD2B152C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
