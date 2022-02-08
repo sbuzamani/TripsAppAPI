@@ -54,16 +54,8 @@ namespace TripsApp.UnitTests.MockData
             {
                 new Domain.Repositories.Entities.Trip{
                     Id = new Guid(),
-                    CountryId = 1,
-                    Distance = 30.3M,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Domain.Repositories.Entities.Trip
-                {
-                    Id = new Guid(),
-                    CountryId = 2,
-                    Distance = 35.53M,
+                    CountryId = 3,
+                    Distance = 12M,
                     TimeStamp = DateTime.Now,
                     VehicleId = new Guid()
                 },
@@ -71,7 +63,45 @@ namespace TripsApp.UnitTests.MockData
                 {
                     Id = new Guid(),
                     CountryId = 3,
-                    Distance = 500.8M,
+                    Distance = 11M,
+                    TimeStamp = DateTime.Now,
+                    VehicleId = new Guid()
+                },
+                new Domain.Repositories.Entities.Trip
+                {
+                    Id = new Guid(),
+                    CountryId = 3,
+                    Distance = 10M,
+                    TimeStamp = DateTime.Now,
+                    VehicleId = new Guid()
+                }
+            };
+        }
+
+        public static List<Domain.Repositories.Entities.Trip> GetZeroDistanceTripEntityList()
+        {
+            return new List<Domain.Repositories.Entities.Trip>()
+            {
+                new Domain.Repositories.Entities.Trip{
+                    Id = new Guid(),
+                    CountryId = 3,
+                    Distance = 0M,
+                    TimeStamp = DateTime.Now,
+                    VehicleId = new Guid()
+                },
+                new Domain.Repositories.Entities.Trip
+                {
+                    Id = new Guid(),
+                    CountryId = 3,
+                    Distance = 0M,
+                    TimeStamp = DateTime.Now,
+                    VehicleId = new Guid()
+                },
+                new Domain.Repositories.Entities.Trip
+                {
+                    Id = new Guid(),
+                    CountryId = 3,
+                    Distance = 0M,
                     TimeStamp = DateTime.Now,
                     VehicleId = new Guid()
                 }

@@ -4,7 +4,7 @@ namespace TripsApp.ApplicationServices.Services
 {
     public interface ITripService
     {
-        Task<bool> SaveTrip(Trip trip);
-        Task<List<Trip>> GetTrips(Guid vehicleId);
+        Task<bool> SaveTripAsync(Trip trip);
+        Task<VehicleTrip?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate);
     }
 }

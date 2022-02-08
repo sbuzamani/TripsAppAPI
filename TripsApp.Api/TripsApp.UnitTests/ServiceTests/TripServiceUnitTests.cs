@@ -27,24 +27,51 @@ namespace TripsApp.UnitTests.ServiceTests
             _mockRepository.Setup(x => x.SaveTrip(It.IsAny<Domain.Repositories.Entities.Trip>())).ReturnsAsync(true);
             var trip = TripsMocks.GetTrip();
 
-            var result = await _tripService.SaveTrip(trip);
+            var result = await _tripService.SaveTripAsync(trip);
 
             Assert.True(result);
         }
 
         [Fact]
-        public async Task GetTrips_ValidVehicleId_ReturnsTripsList()
+        public async Task GetTripsSummaryAsync_ValidVehicleId_ReturnsVehicleTripSummary()
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetTripEntityList();
-            var tripModels = TripsMocks.GetTripList();
-            _mockRepository.Setup(x => x.GetTrips(It.IsAny<Guid>())).ReturnsAsync(tripEntities);
+            _mockRepository.Setup(x => x.GetTrips(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockRepository.Setup(x => x.GetExchangeRate(It.IsAny<int>())).ReturnsAsync(5M);
+            _mockRepository.Setup(x => x.GetCostPerKilometer()).ReturnsAsync(2M);
 
-            var result = await _tripService.GetTrips(vehicleId);
+            var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
-            //Assert.Equal(tripEntities.Count(), result.Count());
-            //Assert.Contains(tripModels.First(), result);
-            Assert.NotEmpty(result);
+            Assert.Equal(33M, result?.TotalKms);
+            Assert.Equal(330M, result?.CalculatedCost);
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task GetTripsSummaryAsync_NoExchangeRateAndCost_ReturnsVehicleTripSummaryWithZeroCost()
+        {
+            var vehicleId = Guid.NewGuid();
+            var tripEntities = TripsMocks.GetTripEntityList();
+            _mockRepository.Setup(x => x.GetTrips(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+
+            var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
+
+            Assert.Equal(33M, result?.TotalKms);
+            Assert.Equal(0M, result?.CalculatedCost);
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task GetTripsSummaryAsync_ZeroDistanceTrips_ReturnsVehicleTripSummaryWithZeroTotalDistance()
+        {
+            var vehicleId = Guid.NewGuid();
+            var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
+            _mockRepository.Setup(x => x.GetTrips(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+
+            var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
+
+            Assert.Equal(0M, result?.TotalKms);
         }
     }
 }

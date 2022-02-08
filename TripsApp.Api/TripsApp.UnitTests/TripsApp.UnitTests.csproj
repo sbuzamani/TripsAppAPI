@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TripsApp.Api\TripsApp.Api.csproj" />
     <ProjectReference Include="..\TripsApp.ApplicationServices\TripsApp.ApplicationServices.csproj" />
     <ProjectReference Include="..\TripsApp.Domain\TripsApp.Domain.csproj" />
   </ItemGroup>
