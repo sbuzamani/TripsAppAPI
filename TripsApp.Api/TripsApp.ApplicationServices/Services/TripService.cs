@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using TripsApp.Domain.Models;
 using TripsApp.Domain.Repositories;
 
@@ -8,40 +9,62 @@ namespace TripsApp.ApplicationServices.Services
     {
         private ITripRepository _tripRepository;
         private readonly IMapper _mapper;
-        public TripService(ITripRepository tripRepository, IMapper mapper)
+        private readonly ILogger _logger;
+        public TripService(ITripRepository tripRepository, IMapper mapper, ILogger<TripService> logger)
         {
             _tripRepository = tripRepository;
             _mapper = mapper;
+            _logger = logger ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<bool> SaveTripAsync(Trip trip)
         {
             var tripEntity = _mapper.Map<Domain.Repositories.Entities.Trip>(trip);
-            var result = await _tripRepository.SaveTrip(tripEntity);
+            bool result = false;
+
+            try
+            {
+                result = await _tripRepository.SaveTripAsync(tripEntity);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"failed to save {trip.ToString()}");
+            }
+
             return result;
         }
 
-        public async Task<VehicleTrip?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
+        public async Task<VehicleSummary?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            var trips = await _tripRepository.GetTrips(vehicleId, startDate, endDate);
-            if (!trips.Any())
+            List<Domain.Repositories.Entities.Trip> trips = new List<Domain.Repositories.Entities.Trip>();
+
+            try
+            {
+                trips = await _tripRepository.GetVehicleTripsAsync(vehicleId, startDate, endDate);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Unable to complete query {vehicleId}");
+            }
+
+            if (!trips.Any() || trips == null)
             {
                 return null;
             }
-            var result = _mapper.Map<List<Trip>>(trips);
 
+            var result = _mapper.Map<List<Trip>>(trips);
             var tripSummary = await CalculateTripsSummaryAsync(result);
+
             return tripSummary;
         }
-        private async Task<VehicleTrip> CalculateTripsSummaryAsync(IEnumerable<Trip> trips)
+        private async Task<VehicleSummary> CalculateTripsSummaryAsync(IEnumerable<Trip> trips)
         {
-            var exchangeRate = await _tripRepository.GetExchangeRate(trips.First().CountryId);
-            var costPerKilometer = await _tripRepository.GetCostPerKilometer();
+            var exchangeRate = await _tripRepository.GetExchangeRateAsync(trips.First().CountryId);
+            var costPerKilometer = await _tripRepository.GetCostPerKilometerAsync();
             var totalDistance = CalculateTotalDistance(trips);
-
             var totalCost = (exchangeRate * costPerKilometer) * totalDistance;
 
-            return new VehicleTrip
+            return new VehicleSummary
             {
                 CalculatedCost = totalCost,
                 VehicleId = trips.First().VehicleId,

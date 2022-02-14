@@ -12,6 +12,6 @@ namespace TripsApp.Domain.Models
 
         public decimal Rate { get; set; }
 
-        public string Currency { get; set; }
+        public string CurrencyCode { get; set; }
     }
 }

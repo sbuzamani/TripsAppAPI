@@ -107,5 +107,17 @@ namespace TripsApp.UnitTests.MockData
                 }
             };
         }
+
+        public static Trip GetSaveTrip()
+        {
+            return new Trip
+            {
+                Id = Guid.NewGuid(),
+                VehicleId = Guid.NewGuid(),
+                CountryId = 1,
+                Distance = 5M,
+                TimeStamp = DateTime.Now
+            };
+        }
     }
 }

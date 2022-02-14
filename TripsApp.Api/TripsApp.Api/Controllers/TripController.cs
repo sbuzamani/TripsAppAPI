@@ -15,14 +15,24 @@ namespace TripsApp.Api.Controllers
         }
         [HttpPost]
         [Route("/trip")]
-        public async Task<IActionResult> SaveTripAsync([FromBody] Trip trip)
+        public async Task<IActionResult> SaveTripAsync([FromBody] TripDto tripDto)
         {
             //Use service to write Trip into db.
+            //TODO Validate dto
+            var trip = new Trip
+            {
+                Id = tripDto.Id,
+                CountryId = tripDto.CountryId,
+                Distance = tripDto.Distance,
+                TimeStamp = tripDto.TimeStamp,
+                VehicleId = tripDto.VehicleId
+            };
+
             var result = await _tripService.SaveTripAsync(trip);
 
             if (!result)
             {
-                return StatusCode(500);
+                return BadRequest(result);
             }
 
             return Ok(result);

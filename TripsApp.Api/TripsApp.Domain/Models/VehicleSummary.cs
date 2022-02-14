@@ -1,6 +1,6 @@
 ﻿namespace TripsApp.ApplicationServices.Services
 {
-    public class VehicleTrip
+    public class VehicleSummary
     {
         public Guid VehicleId { get; set; }
         public decimal TotalKms { get; set; }

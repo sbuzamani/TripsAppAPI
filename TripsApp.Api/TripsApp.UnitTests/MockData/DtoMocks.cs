@@ -26,13 +26,25 @@ namespace TripsApp.UnitTests.MockData
             };
         }
 
-        public static VehicleTrip GetVehicleTrip()
+        public static VehicleSummary GetVehicleTrip()
         {
-            return new VehicleTrip
+            return new VehicleSummary
             {
                 VehicleId = Guid.NewGuid(),
                 CalculatedCost = 5M,
                 TotalKms = 5M
+            };
+        }
+
+        public static TripDto GetTripDto()
+        {
+            return new TripDto
+            {
+                Id = Guid.NewGuid(),
+                VehicleId = Guid.NewGuid(),
+                CountryId = 1,
+                Distance = 5M,
+                TimeStamp = DateTime.Now
             };
         }
     }

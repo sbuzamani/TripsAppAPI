@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using TripsApp.Api.Controllers;
 using TripsApp.Api.Dtos;
 using TripsApp.ApplicationServices.Services;
-using TripsApp.Domain.Repositories;
+using TripsApp.Domain.Models;
 using TripsApp.UnitTests.MockData;
 using Xunit;
 
@@ -15,17 +15,49 @@ namespace TripsApp.UnitTests.ControllerTests
     {
         private readonly TripController _tripController;
         private readonly Mock<ITripService> _tripService;
-        private readonly Mock<ITripRepository> _tripRepository;
 
         public TripControllerTests()
         {
             _tripService = new Mock<ITripService>();
-            _tripRepository = new Mock<ITripRepository>();
             _tripController = new TripController(_tripService.Object);
         }
 
         [Fact]
-        public async Task GetTrips_ValidRequest_ReturnsTripsResponse()
+        public async Task SaveTripAsync_ServiceReturnsFalse_ReturnsBadRequest()
+        {
+            _tripService.Setup(x => x.SaveTripAsync(It.IsAny<Trip>())).ReturnsAsync(false);
+            var tripDto = DtoMocks.GetTripDto();
+
+            var result = await _tripController.SaveTripAsync(tripDto);
+
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task SaveTripAsync_ValidRequest_ReturnsTrue()
+        {
+            _tripService.Setup(x => x.SaveTripAsync(It.IsAny<Trip>())).ReturnsAsync(true);
+            var tripDto = DtoMocks.GetTripDto();
+
+            var result = await _tripController.SaveTripAsync(tripDto);
+
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task SaveTripAsync_ValidRequest_ServiceMethodCalled()
+        {
+            _tripService.Setup(x => x.SaveTripAsync(It.IsAny<Trip>())).ReturnsAsync(true).Verifiable();
+            var tripDto = DtoMocks.GetTripDto();
+
+            var result = await _tripController.SaveTripAsync(tripDto);
+
+            Assert.IsType<OkObjectResult>(result);
+            _tripService.Verify();
+        }
+
+        [Fact]
+        public async Task GetTripSummaryAsync_ValidRequest_ReturnsTripsResponse()
         {
             _tripService.Setup(x => x.GetTripsSummaryAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(DtoMocks.GetVehicleTrip());
             var tripRequestBody = DtoMocks.TripRequestMock();
@@ -38,9 +70,9 @@ namespace TripsApp.UnitTests.ControllerTests
         }
 
         [Fact]
-        public async Task GetTrips_InvalidRequest_ReturnsNoContent()
+        public async Task GetTripSummaryAsync_InvalidRequest_ReturnsNoContent()
         {
-            _tripService.Setup(x => x.GetTripsSummaryAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync((VehicleTrip?)null);
+            _tripService.Setup(x => x.GetTripsSummaryAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync((VehicleSummary?)null);
             var tripRequestBody = DtoMocks.TripRequestMock();
 
             var result = await _tripController.GetTripSummaryAsync(tripRequestBody);

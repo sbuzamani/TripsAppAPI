@@ -11,13 +11,13 @@ namespace TripsApp.Domain.Mocks
                 new ExchangeRate
                 {
                     CountryId = 144,
-                    Currency = "USD",
+                    CurrencyCode = "USD",
                     Rate = 1
                 },
                 new ExchangeRate
                 {
                     CountryId = 144,
-                    Currency = "JPY",
+                    CurrencyCode = "JPY",
                     Rate = (decimal)1.5f
                 }
             };
