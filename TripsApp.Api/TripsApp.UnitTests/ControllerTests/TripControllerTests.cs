@@ -34,7 +34,7 @@ namespace TripsApp.UnitTests.ControllerTests
         }
 
         [Fact]
-        public async Task SaveTripAsync_ValidRequest_ReturnsTrue()
+        public async Task SaveTripAsync_ValidRequest_ReturnsOKResponse()
         {
             _tripService.Setup(x => x.SaveTripAsync(It.IsAny<Trip>())).ReturnsAsync(true);
             var tripDto = DtoMocks.GetTripDto();
@@ -70,7 +70,7 @@ namespace TripsApp.UnitTests.ControllerTests
         }
 
         [Fact]
-        public async Task GetTripSummaryAsync_InvalidRequest_ReturnsNoContent()
+        public async Task GetTripSummaryAsync_InvalidRequest_ReturnsNoContentResponse()
         {
             _tripService.Setup(x => x.GetTripsSummaryAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync((VehicleSummary?)null);
             var tripRequestBody = DtoMocks.TripRequestMock();
