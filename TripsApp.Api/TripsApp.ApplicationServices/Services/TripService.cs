@@ -60,7 +60,8 @@ namespace TripsApp.ApplicationServices.Services
         }
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(IEnumerable<Trip> trips)
         {
-            var exchangeRate = await _tripRepository.GetExchangeRateAsync(trips.First().CountryId);
+            var countryId = trips.First().CountryId;
+            var exchangeRate = await _tripRepository.GetExchangeRateAsync(countryId);
             var costPerKilometer = await _tripRepository.GetCostPerKilometerAsync();
             var totalDistance = CalculateTotalDistance(trips);
             var totalCost = (exchangeRate * costPerKilometer) * totalDistance;
