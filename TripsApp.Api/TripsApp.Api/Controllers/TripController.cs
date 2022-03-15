@@ -28,6 +28,7 @@ namespace TripsApp.Api.Controllers
                 VehicleId = tripDto.VehicleId
             };
 
+
             var result = await _tripService.SaveTripAsync(trip);
 
             if (!result)

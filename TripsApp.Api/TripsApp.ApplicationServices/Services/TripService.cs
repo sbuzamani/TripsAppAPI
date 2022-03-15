@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using TripsApp.Domain.Models;
-using TripsApp.Domain.Repositories;
+using TripsApp.Mongo.Interfaces;
 
 namespace TripsApp.ApplicationServices.Services
 {
     public class TripService : ITripService
     {
-        private ITripRepository _tripRepository;
+        //private ITripRepository _tripRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly ITripRepository _tripRepository;
         public TripService(ITripRepository tripRepository, IMapper mapper, ILogger<TripService> logger)
         {
             _tripRepository = tripRepository;
@@ -19,12 +20,12 @@ namespace TripsApp.ApplicationServices.Services
 
         public async Task<bool> SaveTripAsync(Trip trip)
         {
-            var tripEntity = _mapper.Map<Domain.Repositories.Entities.Trip>(trip);
+            var tripEntity = _mapper.Map<Mongo.Entities.Trip>(trip);
             bool result = false;
 
             try
             {
-                result = await _tripRepository.SaveTripAsync(tripEntity);
+                result = await _tripRepository.SaveAsync(tripEntity);
             }
             catch (Exception e)
             {
@@ -36,7 +37,7 @@ namespace TripsApp.ApplicationServices.Services
 
         public async Task<VehicleSummary?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            List<Domain.Repositories.Entities.Trip> trips = new List<Domain.Repositories.Entities.Trip>();
+            List<Mongo.Entities.Trip> trips = new List<Mongo.Entities.Trip>();
 
             try
             {

@@ -1,4 +1,6 @@
 ﻿using TripsApp.ApplicationServices.IoC;
+using TripsApp.Mongo.Interfaces;
+using TripsApp.Mongo.Repository;
 
 namespace TripsApp.Api
 {
@@ -14,6 +16,11 @@ namespace TripsApp.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient<ITripRepository>(c =>
+            {
+                return new TripRepository("MongoDb:ConnectionString", "MongoDb:DatabaseName");
+            });
+
 
 
             services.AddCors(options =>
@@ -27,7 +34,7 @@ namespace TripsApp.Api
                     });
             });
 
-            //services.AddApplicationServices();
+            services.AddApplicationServices();
         }
 
 
