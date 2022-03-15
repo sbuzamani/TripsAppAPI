@@ -7,7 +7,6 @@ namespace TripsApp.ApplicationServices.Services
 {
     public class TripService : ITripService
     {
-        //private ITripRepository _tripRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly ITripRepository _tripRepository;
