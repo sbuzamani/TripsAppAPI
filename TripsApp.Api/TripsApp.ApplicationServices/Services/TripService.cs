@@ -10,11 +10,17 @@ namespace TripsApp.ApplicationServices.Services
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly ITripRepository _tripRepository;
-        public TripService(ITripRepository tripRepository, IMapper mapper, ILogger<TripService> logger)
+        private readonly IExchangeRateRepository _exchangeRateRepository;
+        private readonly ICountryRepository _countryRepository;
+        public TripService(IMapper mapper, ILogger<TripService> logger, ITripRepository tripRepository,
+            IExchangeRateRepository exchangeRateRepository, ICountryRepository countryRepository
+            )
         {
-            _tripRepository = tripRepository;
             _mapper = mapper;
             _logger = logger ?? throw new ArgumentNullException(nameof(mapper));
+            _tripRepository = tripRepository;
+            _exchangeRateRepository = exchangeRateRepository;
+            _countryRepository = countryRepository;
         }
 
         public async Task<bool> SaveTripAsync(Trip trip)
@@ -60,8 +66,8 @@ namespace TripsApp.ApplicationServices.Services
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(IEnumerable<Trip> trips)
         {
             var countryId = trips.First().CountryId;
-            var exchangeRate = await _tripRepository.GetExchangeRateAsync(countryId);
-            var costPerKilometer = await _tripRepository.GetCostPerKilometerAsync();
+            var exchangeRate = await _exchangeRateRepository.GetAsync(countryId);
+            var costPerKilometer = await _tripRepository.GetCostPerKilometerAsync(); //TODO Get cost per kilometer from repo
             var totalDistance = CalculateTotalDistance(trips);
             var totalCost = (exchangeRate * costPerKilometer) * totalDistance;
 
