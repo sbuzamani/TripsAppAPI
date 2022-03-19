@@ -1,30 +1,37 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using TripsApp.Domain.Models;
-using TripsApp.Domain.Repositories;
+using TripsApp.Mongo.Interfaces;
 
 namespace TripsApp.ApplicationServices.Services
 {
     public class TripService : ITripService
     {
-        private ITripRepository _tripRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        public TripService(ITripRepository tripRepository, IMapper mapper, ILogger<TripService> logger)
+        private readonly ITripRepository _tripRepository;
+        private readonly IExchangeRateRepository _exchangeRateRepository;
+        private readonly ICountryRepository _countryRepository;
+        private readonly IFuelRateRepository _fuelRateRepository;
+        public TripService(IMapper mapper, ILogger<TripService> logger, ITripRepository tripRepository,
+            IExchangeRateRepository exchangeRateRepository, ICountryRepository countryRepository, IFuelRateRepository fuelRateRepository)
         {
-            _tripRepository = tripRepository;
             _mapper = mapper;
             _logger = logger ?? throw new ArgumentNullException(nameof(mapper));
+            _tripRepository = tripRepository;
+            _exchangeRateRepository = exchangeRateRepository;
+            _countryRepository = countryRepository;
+            _fuelRateRepository = fuelRateRepository;
         }
 
         public async Task<bool> SaveTripAsync(Trip trip)
         {
-            var tripEntity = _mapper.Map<Domain.Repositories.Entities.Trip>(trip);
+            var tripEntity = _mapper.Map<Mongo.Entities.Trip>(trip);
             bool result = false;
 
             try
             {
-                result = await _tripRepository.SaveTripAsync(tripEntity);
+                result = await _tripRepository.SaveAsync(tripEntity);
             }
             catch (Exception e)
             {
@@ -36,7 +43,7 @@ namespace TripsApp.ApplicationServices.Services
 
         public async Task<VehicleSummary?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            List<Domain.Repositories.Entities.Trip> trips = new List<Domain.Repositories.Entities.Trip>();
+            List<Mongo.Entities.Trip> trips = new List<Mongo.Entities.Trip>();
 
             try
             {
@@ -59,10 +66,11 @@ namespace TripsApp.ApplicationServices.Services
         }
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(IEnumerable<Trip> trips)
         {
-            var exchangeRate = await _tripRepository.GetExchangeRateAsync(trips.First().CountryId);
-            var costPerKilometer = await _tripRepository.GetCostPerKilometerAsync();
+            var countryId = trips.First().CountryId;
+            var exchangeRate = await _exchangeRateRepository.GetAsync(countryId);
+            var costPerKilometer = await _fuelRateRepository.GetAsync();
             var totalDistance = CalculateTotalDistance(trips);
-            var totalCost = (exchangeRate * costPerKilometer) * totalDistance;
+            var totalCost = (exchangeRate.Rate * costPerKilometer) * totalDistance;
 
             return new VehicleSummary
             {

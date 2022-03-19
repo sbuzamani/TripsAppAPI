@@ -7,7 +7,7 @@ namespace TripsApp.ApplicationServices.Mapper
     {
         public DomainMappingProfile()
         {
-            CreateMap<Trip, Domain.Repositories.Entities.Trip>().ReverseMap();
+            CreateMap<Trip, Mongo.Entities.Trip>().ReverseMap();
         }
     }
 }
