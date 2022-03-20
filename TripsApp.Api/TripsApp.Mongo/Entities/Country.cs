@@ -1,10 +1,8 @@
-﻿using TripsApp.Mongo.Interfaces;
-
-namespace TripsApp.Mongo.Entities
+﻿namespace TripsApp.Mongo.Entities
 {
-    public class Country : IEntity
+    public class Country : Entity
     {
-        public int Id { get; set; }
+        public int CountryId { get; set; }
 
         public string Name { get; set; }
 

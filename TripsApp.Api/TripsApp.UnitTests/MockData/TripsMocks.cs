@@ -10,7 +10,7 @@ namespace TripsApp.UnitTests.MockData
         {
             return new Trip
             {
-                Id = new Guid(),
+                TripId = new Guid(),
                 CountryId = 1,
                 Distance = 3.3M,
                 TimeStamp = DateTime.Now,
@@ -23,7 +23,7 @@ namespace TripsApp.UnitTests.MockData
             return new List<Trip>()
             {
                 new Trip{
-                    Id = new Guid(),
+                    TripId = new Guid(),
                     CountryId = 1,
                     Distance = 30.3M,
                     TimeStamp = DateTime.Now,
@@ -31,7 +31,7 @@ namespace TripsApp.UnitTests.MockData
                 },
                 new Trip
                 {
-                    Id = new Guid(),
+                    TripId = new Guid(),
                     CountryId = 2,
                     Distance = 35.53M,
                     TimeStamp = DateTime.Now,
@@ -39,7 +39,7 @@ namespace TripsApp.UnitTests.MockData
                 },
                 new Trip
                 {
-                    Id = new Guid(),
+                    TripId = new Guid(),
                     CountryId = 3,
                     Distance = 500.8M,
                     TimeStamp = DateTime.Now,
@@ -48,28 +48,28 @@ namespace TripsApp.UnitTests.MockData
             };
         }
 
-        public static List<Domain.Repositories.Entities.Trip> GetTripEntityList()
+        public static List<Mongo.Entities.Trip> GetTripEntityList()
         {
-            return new List<Domain.Repositories.Entities.Trip>()
+            return new List<Mongo.Entities.Trip>()
             {
-                new Domain.Repositories.Entities.Trip{
-                    Id = new Guid(),
+                new Mongo.Entities.Trip{
+                    TripId = new Guid(),
                     CountryId = 3,
                     Distance = 12M,
                     TimeStamp = DateTime.Now,
                     VehicleId = new Guid()
                 },
-                new Domain.Repositories.Entities.Trip
+                new Mongo.Entities.Trip
                 {
-                    Id = new Guid(),
+                    TripId = new Guid(),
                     CountryId = 3,
                     Distance = 11M,
                     TimeStamp = DateTime.Now,
                     VehicleId = new Guid()
                 },
-                new Domain.Repositories.Entities.Trip
+                new Mongo.Entities.Trip
                 {
-                    Id = new Guid(),
+                    TripId = new Guid(),
                     CountryId = 3,
                     Distance = 10M,
                     TimeStamp = DateTime.Now,
@@ -78,28 +78,28 @@ namespace TripsApp.UnitTests.MockData
             };
         }
 
-        public static List<Domain.Repositories.Entities.Trip> GetZeroDistanceTripEntityList()
+        public static List<Mongo.Entities.Trip> GetZeroDistanceTripEntityList()
         {
-            return new List<Domain.Repositories.Entities.Trip>()
+            return new List<Mongo.Entities.Trip>()
             {
-                new Domain.Repositories.Entities.Trip{
-                    Id = new Guid(),
+                new Mongo.Entities.Trip{
+                    TripId = new Guid(),
                     CountryId = 3,
                     Distance = 0M,
                     TimeStamp = DateTime.Now,
                     VehicleId = new Guid()
                 },
-                new Domain.Repositories.Entities.Trip
+                new Mongo.Entities.Trip
                 {
-                    Id = new Guid(),
+                    TripId = new Guid(),
                     CountryId = 3,
                     Distance = 0M,
                     TimeStamp = DateTime.Now,
                     VehicleId = new Guid()
                 },
-                new Domain.Repositories.Entities.Trip
+                new Mongo.Entities.Trip
                 {
-                    Id = new Guid(),
+                    TripId = new Guid(),
                     CountryId = 3,
                     Distance = 0M,
                     TimeStamp = DateTime.Now,
@@ -112,7 +112,7 @@ namespace TripsApp.UnitTests.MockData
         {
             return new Trip
             {
-                Id = Guid.NewGuid(),
+                TripId = Guid.NewGuid(),
                 VehicleId = Guid.NewGuid(),
                 CountryId = 1,
                 Distance = 5M,

@@ -1,9 +1,10 @@
 ﻿using MongoDB.Driver;
+using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
 
 namespace TripsApp.Mongo.Repository
 {
-    public abstract class Repository<T> : IRepository<T> where T : IEntity
+    public abstract class Repository<T> : IRepository<T> where T : Entity
     {
         private readonly IMongoClient _client;
 
@@ -39,8 +40,16 @@ namespace TripsApp.Mongo.Repository
         public async Task<bool> SaveAsync(T t)
         {
             var collection = GetCollection();
+            try
+            {
+                await collection.InsertOneAsync(t);
 
-            await collection.InsertOneAsync(t);
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
 
             return true;
         }
@@ -65,7 +74,7 @@ namespace TripsApp.Mongo.Repository
 
         private string GetCollectionName()
         {
-            return typeof(T).GetType().Name;
+            return typeof(T).Name;
         }
     }
 }

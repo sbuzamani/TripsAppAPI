@@ -2,9 +2,9 @@
 {
     public class Trip
     {
-        public Guid Id { get; set; }
+        public Guid TripId { get; set; }
 
-        public Guid  VehicleId { get; set; }
+        public Guid VehicleId { get; set; }
 
         public decimal Distance { get; set; }
 

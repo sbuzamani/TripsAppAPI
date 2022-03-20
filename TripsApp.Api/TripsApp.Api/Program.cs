@@ -1,15 +1,36 @@
 using TripsApp.ApplicationServices.IoC;
 using TripsApp.ApplicationServices.Services;
+using TripsApp.Mongo.Interfaces;
+using TripsApp.Mongo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration["MongoDb:ConnectionString"];
+var databaseName = builder.Configuration["MongoDb:DatabaseName"];
 
+// Add services to the container.
+builder.Services.AddTransient<ITripRepository>(c =>
+{
+    return new TripRepository(connectionString, databaseName);
+});
+builder.Services.AddTransient<ICountryRepository>(c =>
+{
+    return new CountryRepository(connectionString, databaseName);
+});
+builder.Services.AddTransient<IExchangeRateRepository>(c =>
+{
+    return new ExchangeRateRepository(connectionString, databaseName);
+});
+builder.Services.AddTransient<IFuelRateRepository>(c =>
+{
+    return new FuelRateRepository(connectionString, databaseName);
+});
+
+builder.Services.AddTransient<ITripService, TripService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<ITripService, TripService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();

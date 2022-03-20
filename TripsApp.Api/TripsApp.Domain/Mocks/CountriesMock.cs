@@ -10,19 +10,19 @@ namespace TripsApp.Domain.Mocks
             {
                 new Country
                 {
-                    Id = 144,
+                    CountryId = 144,
                     Name = "USA",
                     FuelPrice = 4
                 },
                 new Country
                 {
-                    Id= 145,
+                    CountryId= 145,
                     Name="China",
                     FuelPrice=3
                 },
-                new Country 
+                new Country
                 {
-                    Id=146,
+                    CountryId=146,
                     Name = "Japan",
                     FuelPrice = (decimal)4.444f
                 }

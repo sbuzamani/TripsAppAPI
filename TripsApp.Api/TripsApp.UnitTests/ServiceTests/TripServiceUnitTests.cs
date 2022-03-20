@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TripsApp.ApplicationServices.Mapper;
 using TripsApp.ApplicationServices.Services;
-using TripsApp.Domain.Repositories;
+using TripsApp.Mongo.Interfaces;
 using TripsApp.UnitTests.MockData;
 using Xunit;
 
@@ -15,20 +15,27 @@ namespace TripsApp.UnitTests.ServiceTests
     public class TripServiceUnitTests
     {
         private readonly ITripService _tripService;
-        private Mock<ITripRepository> _mockRepository;
+        private Mock<ITripRepository> _mockTripRepository;
+        private Mock<IExchangeRateRepository> _mockExchangeRateRepository;
+        private Mock<ICountryRepository> _mockCountryRepository;
+        private Mock<IFuelRateRepository> _fuelRateRepository;
         private Mock<ILogger<TripService>> _logger;
         public TripServiceUnitTests()
         {
             var mapper = new Mapper(new MapperConfiguration(c => c.AddProfile<DomainMappingProfile>()));
-            _mockRepository = new Mock<ITripRepository>();
             _logger = new Mock<ILogger<TripService>>();
-            _tripService = new TripService(_mockRepository.Object, mapper, _logger.Object);
+            _mockTripRepository = new Mock<ITripRepository>();
+            _mockExchangeRateRepository = new Mock<IExchangeRateRepository>();
+            _mockCountryRepository = new Mock<ICountryRepository>();
+            _fuelRateRepository = new Mock<IFuelRateRepository>();
+            _tripService = new TripService(mapper, _logger.Object, _mockTripRepository.Object,
+                _mockExchangeRateRepository.Object, _mockCountryRepository.Object, _fuelRateRepository.Object);
         }
 
         [Fact]
         public async Task SaveTripAsync_ValidTrip_ReturnsTrue()
         {
-            _mockRepository.Setup(x => x.SaveTripAsync(It.IsAny<Domain.Repositories.Entities.Trip>())).ReturnsAsync(true);
+            _mockTripRepository.Setup(x => x.SaveAsync(It.IsAny<Mongo.Entities.Trip>())).ReturnsAsync(true);
             var trip = TripsMocks.GetTrip();
 
             var result = await _tripService.SaveTripAsync(trip);
@@ -39,7 +46,7 @@ namespace TripsApp.UnitTests.ServiceTests
         [Fact]
         public async Task SaveTripAsync_RepositoryReturnsFalse_ReturnsFalse()
         {
-            _mockRepository.Setup(x => x.SaveTripAsync(It.IsAny<Domain.Repositories.Entities.Trip>())).ReturnsAsync(false);
+            _mockTripRepository.Setup(x => x.SaveAsync(It.IsAny<Mongo.Entities.Trip>())).ReturnsAsync(false);
             var trip = TripsMocks.GetTrip();
 
             var result = await _tripService.SaveTripAsync(trip);
@@ -50,7 +57,7 @@ namespace TripsApp.UnitTests.ServiceTests
         [Fact]
         public async Task SaveTripAsync_RepositoryThrowsException_ReturnsFalse()
         {
-            _mockRepository.Setup(x => x.SaveTripAsync(It.IsAny<Domain.Repositories.Entities.Trip>())).ThrowsAsync(new Exception());
+            _mockTripRepository.Setup(x => x.SaveAsync(It.IsAny<Mongo.Entities.Trip>())).ThrowsAsync(new Exception());
             var trip = TripsMocks.GetTrip();
 
             var result = await _tripService.SaveTripAsync(trip);
@@ -63,9 +70,9 @@ namespace TripsApp.UnitTests.ServiceTests
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetTripEntityList();
-            _mockRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockRepository.Setup(x => x.GetExchangeRateAsync(It.IsAny<int>())).ReturnsAsync(5M);
-            _mockRepository.Setup(x => x.GetCostPerKilometerAsync()).ReturnsAsync(2M);
+            _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate { CountryId = 1, CurrencyCode = "", Rate = 5 });
+            _fuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(2M);
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
@@ -79,7 +86,8 @@ namespace TripsApp.UnitTests.ServiceTests
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetTripEntityList();
-            _mockRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate { CountryId = 1, CurrencyCode = "", Rate = 3 });
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
@@ -93,7 +101,8 @@ namespace TripsApp.UnitTests.ServiceTests
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
-            _mockRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate { CountryId = 1, CurrencyCode = "", Rate = 3 });
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
@@ -105,7 +114,7 @@ namespace TripsApp.UnitTests.ServiceTests
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
-            _mockRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ThrowsAsync(new Exception());
+            _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ThrowsAsync(new Exception());
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
@@ -117,7 +126,7 @@ namespace TripsApp.UnitTests.ServiceTests
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
-            _mockRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(new List<Domain.Repositories.Entities.Trip>());
+            _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(new List<Mongo.Entities.Trip>());
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
