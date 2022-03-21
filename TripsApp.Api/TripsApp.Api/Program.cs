@@ -1,3 +1,4 @@
+using TripsApp.Api.Constants;
 using TripsApp.ApplicationServices.IoC;
 using TripsApp.ApplicationServices.Services;
 using TripsApp.Mongo.Interfaces;
@@ -5,8 +6,8 @@ using TripsApp.Mongo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration["MongoDb:ConnectionString"];
-var databaseName = builder.Configuration["MongoDb:DatabaseName"];
+var connectionString = builder.Configuration[ConfigurationConstants.ConnectionStringName];
+var databaseName = builder.Configuration[ConfigurationConstants.DatabaseName];
 
 // Add services to the container.
 builder.Services.AddTransient<ITripRepository>(c =>
