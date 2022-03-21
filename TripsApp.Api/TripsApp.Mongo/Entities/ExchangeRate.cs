@@ -1,8 +1,6 @@
-﻿using TripsApp.Mongo.Interfaces;
-
-namespace TripsApp.Mongo.Entities
+﻿namespace TripsApp.Mongo.Entities
 {
-    public class ExchangeRate : IEntity
+    public class ExchangeRate : Entity
     {
         public int CountryId { get; set; }
 

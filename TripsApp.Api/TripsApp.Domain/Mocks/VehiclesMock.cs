@@ -9,28 +9,28 @@ namespace TripsApp.Domain.Mocks
             return new List<Vehicle>{
                 new Vehicle
                 {
-                    Id = new Guid(),
+                    VehicleId = new Guid(),
                     CountryId = 144,
                     Make = "Porsche",
                     Year = 2011
                 },
                 new Vehicle
                 {
-                    Id = new Guid(),
+                    VehicleId = new Guid(),
                     CountryId = 145,
                     Make = "Porsche",
                     Year = 2011
                 },
                 new Vehicle
                 {
-                    Id = new Guid(),
+                    VehicleId = new Guid(),
                     CountryId = 145,
                     Make = "Porsche",
                     Year = 2011
                 },
                 new Vehicle
                 {
-                    Id = new Guid(),
+                    VehicleId = new Guid(),
                     CountryId = 146,
                     Make = "Porsche",
                     Year = 2011

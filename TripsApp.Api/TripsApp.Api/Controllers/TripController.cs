@@ -21,7 +21,7 @@ namespace TripsApp.Api.Controllers
             //TODO Validate dto
             var trip = new Trip
             {
-                Id = tripDto.Id,
+                TripId = tripDto.Id,
                 CountryId = tripDto.CountryId,
                 Distance = tripDto.Distance,
                 TimeStamp = tripDto.TimeStamp,

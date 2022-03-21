@@ -4,7 +4,7 @@ using TripsApp.Mongo.Interfaces;
 
 namespace TripsApp.Mongo.Repository
 {
-    internal class FuelRateRepository : Repository<FuelRate>, IFuelRateRepository
+    public class FuelRateRepository : Repository<FuelRate>, IFuelRateRepository
     {
         public FuelRateRepository(string connectionString, string databaseName) : base(connectionString, databaseName)
         {

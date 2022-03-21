@@ -91,5 +91,4 @@ namespace TripsApp.ApplicationServices.Services
             return result;
         }
     }
-
 }
