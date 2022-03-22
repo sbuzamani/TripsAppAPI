@@ -71,7 +71,7 @@ namespace TripsApp.UnitTests.ServiceTests
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetTripEntityList();
             _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate { CountryId = 1, CurrencyCode = "", Rate = 5 });
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate() { CountryId = 1, CurrencyCode = "", Rate = 5 });
             _fuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(2M);
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
@@ -87,7 +87,7 @@ namespace TripsApp.UnitTests.ServiceTests
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetTripEntityList();
             _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate { CountryId = 1, CurrencyCode = "", Rate = 3 });
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate() { CountryId = 1, CurrencyCode = "", Rate = 3 });
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
@@ -102,7 +102,7 @@ namespace TripsApp.UnitTests.ServiceTests
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
             _mockTripRepository.Setup(x => x.GetVehicleTripsAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate { CountryId = 1, CurrencyCode = "", Rate = 3 });
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(new Mongo.Entities.ExchangeRate() { CountryId = 1, CurrencyCode = "", Rate = 3 });
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 

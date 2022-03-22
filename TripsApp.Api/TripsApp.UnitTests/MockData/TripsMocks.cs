@@ -8,7 +8,7 @@ namespace TripsApp.UnitTests.MockData
     {
         public static Trip GetTrip()
         {
-            return new Trip
+            return new Trip()
             {
                 TripId = new Guid(),
                 CountryId = 1,
@@ -52,7 +52,8 @@ namespace TripsApp.UnitTests.MockData
         {
             return new List<Mongo.Entities.Trip>()
             {
-                new Mongo.Entities.Trip{
+                new Mongo.Entities.Trip
+                {
                     TripId = new Guid(),
                     CountryId = 3,
                     Distance = 12M,
@@ -82,7 +83,8 @@ namespace TripsApp.UnitTests.MockData
         {
             return new List<Mongo.Entities.Trip>()
             {
-                new Mongo.Entities.Trip{
+                new Mongo.Entities.Trip
+                {
                     TripId = new Guid(),
                     CountryId = 3,
                     Distance = 0M,
