@@ -40,7 +40,6 @@ namespace TripsApp.UnitTests.MockData
         {
             return new TripDto
             {
-                Id = Guid.NewGuid(),
                 VehicleId = Guid.NewGuid(),
                 CountryId = 1,
                 Distance = 5M,

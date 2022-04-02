@@ -13,8 +13,10 @@ namespace TripsApp.ApplicationServices.Services
         private readonly IExchangeRateRepository _exchangeRateRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly IFuelRateRepository _fuelRateRepository;
+        private readonly IFuelPriceRepository _fuelPriceRepository;
         public TripService(IMapper mapper, ILogger<TripService> logger, ITripRepository tripRepository,
-            IExchangeRateRepository exchangeRateRepository, ICountryRepository countryRepository, IFuelRateRepository fuelRateRepository)
+            IExchangeRateRepository exchangeRateRepository, ICountryRepository countryRepository, IFuelRateRepository fuelRateRepository,
+            IFuelPriceRepository fuelPriceRepository)
         {
             _mapper = mapper;
             _logger = logger ?? throw new ArgumentNullException(nameof(mapper));
@@ -22,6 +24,7 @@ namespace TripsApp.ApplicationServices.Services
             _exchangeRateRepository = exchangeRateRepository;
             _countryRepository = countryRepository;
             _fuelRateRepository = fuelRateRepository;
+            _fuelPriceRepository = fuelPriceRepository;
         }
 
         public async Task<bool> SaveTripAsync(Trip trip)
@@ -43,11 +46,11 @@ namespace TripsApp.ApplicationServices.Services
 
         public async Task<VehicleSummary?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            List<Mongo.Entities.Trip> trips = new List<Mongo.Entities.Trip>();
+            IEnumerable<Mongo.Entities.Trip> trips = new List<Mongo.Entities.Trip>();
 
             try
             {
-                trips = await _tripRepository.GetVehicleTripsAsync(vehicleId, startDate, endDate);
+                trips = await _tripRepository.ListAsync(vehicleId, startDate, endDate);
             }
             catch (Exception e)
             {
@@ -69,14 +72,19 @@ namespace TripsApp.ApplicationServices.Services
             var countryId = trips.First().CountryId;
             var exchangeRate = await _exchangeRateRepository.GetAsync(countryId);
             var costPerKilometer = await _fuelRateRepository.GetAsync();
+            var fuelPrice = await _fuelPriceRepository.GetFuelPriceAsync(countryId);
+            var countryName = await _countryRepository.GetAsync(countryId);
             var totalDistance = CalculateTotalDistance(trips);
-            var totalCost = (exchangeRate.Rate * costPerKilometer) * totalDistance;
+            var totalCost = exchangeRate.Rate * (fuelPrice.Price * totalDistance);
+            var estimatedCost = totalDistance * costPerKilometer;
 
             return new VehicleSummary
             {
                 CalculatedCost = totalCost,
                 VehicleId = trips.First().VehicleId,
-                TotalKms = totalDistance
+                TotalKms = totalDistance,
+                EstimatedCost = estimatedCost,
+                Country = countryName?.Name,
             };
         }
         private decimal CalculateTotalDistance(IEnumerable<Trip> trips)

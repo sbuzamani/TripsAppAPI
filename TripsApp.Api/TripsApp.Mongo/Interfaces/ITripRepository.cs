@@ -4,6 +4,6 @@ namespace TripsApp.Mongo.Interfaces
 {
     public interface ITripRepository : IRepository<Trip>
     {
-        Task<List<Trip>> GetVehicleTripsAsync(Guid vehicleId, DateTime startDate, DateTime endDate);
+        Task<IEnumerable<Trip>> ListAsync(Guid vehicleId, DateTime startDate, DateTime endDate);
     }
 }

@@ -26,6 +26,10 @@ builder.Services.AddTransient<IFuelRateRepository>(c =>
 {
     return new FuelRateRepository(connectionString, databaseName);
 });
+builder.Services.AddTransient<IFuelPriceRepository>(c =>
+{
+    return new FuelPriceRepository(connectionString, databaseName);
+});
 
 builder.Services.AddTransient<ITripService, TripService>();
 builder.Services.AddControllers();
@@ -37,7 +41,7 @@ builder.Services.AddApplicationServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

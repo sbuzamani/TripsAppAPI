@@ -7,6 +7,6 @@ namespace TripsApp.Mongo.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public virtual string Id { get; set; }
     }
 }
