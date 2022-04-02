@@ -15,7 +15,7 @@ namespace TripsApp.Mongo.Repository
             IEnumerable<Trip> trips = new List<Trip>();
             var collection = GetCollection();
             var stringId = vehicleId.ToString();
-            var filter = Builders<Trip>.Filter.Eq("vehicleId", 0) &
+            var filter = Builders<Trip>.Filter.Eq("vehicleId", stringId) &
             Builders<Trip>.Filter.Gte(x => x.TimeStamp, startDate) & Builders<Trip>.Filter.Lte(x => x.TimeStamp, endDate);
 
             var result = await collection.Find(filter).ToListAsync();
