@@ -10,17 +10,17 @@ namespace TripsApp.Mongo.Repository
         {
         }
 
-        public async Task<List<Trip>> GetVehicleTripsAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
+        public override async Task<IEnumerable<Trip>> ListAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
+            IEnumerable<Trip> trips = new List<Trip>();
             var collection = GetCollection();
+            var stringId = vehicleId.ToString();
+            var filter = Builders<Trip>.Filter.Eq("vehicleId", stringId) &
+            Builders<Trip>.Filter.Gte(x => x.TimeStamp, startDate) & Builders<Trip>.Filter.Lte(x => x.TimeStamp, endDate);
 
-            var filter = Builders<Trip>.Filter.Eq("_id", vehicleId) &
-                Builders<Trip>.Filter.Gte(x => x.TimeStamp, startDate) &
-                Builders<Trip>.Filter.Lte(x => x.TimeStamp, startDate);
+            var result = await collection.Find(filter).ToListAsync();
 
-            var result = await collection.FindAsync(filter);
-
-            return result.ToList();
+            return result;
         }
     }
 }

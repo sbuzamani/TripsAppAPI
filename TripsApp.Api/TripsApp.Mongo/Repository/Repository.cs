@@ -26,7 +26,7 @@ namespace TripsApp.Mongo.Repository
             return true;
         }
 
-        public async Task<T> GetAsync(int id)
+        public virtual async Task<T> GetAsync(int id)
         {
             var collection = GetCollection();
 
@@ -35,6 +35,17 @@ namespace TripsApp.Mongo.Repository
             var result = await collection.FindAsync(filter);
 
             return result.First();
+        }
+
+        public virtual async Task<IEnumerable<T>> ListAsync(Guid id, DateTime startDate, DateTime endDate)
+        {
+            var collection = GetCollection();
+
+            var filter = Builders<T>.Filter.Eq("_id", id);
+
+            var result = await collection.FindAsync(filter);
+
+            return result.ToList();
         }
 
         public async Task<bool> SaveAsync(T t)

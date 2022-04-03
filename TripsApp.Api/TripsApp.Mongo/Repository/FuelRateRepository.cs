@@ -14,7 +14,7 @@ namespace TripsApp.Mongo.Repository
         {
             var collection = GetCollection();
 
-            var filter = Builders<FuelRate>.Filter.Exists("rate");
+            var filter = Builders<FuelRate>.Filter.Exists("Rate");
 
             var result = await collection.FindAsync(filter);
 

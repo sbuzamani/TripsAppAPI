@@ -2,6 +2,7 @@
 using TripsApp.Api.Dtos;
 using TripsApp.ApplicationServices.Services;
 using TripsApp.Domain.Models;
+//using MediatR;
 
 namespace TripsApp.Api.Controllers
 {
@@ -9,6 +10,7 @@ namespace TripsApp.Api.Controllers
     public class TripController : Controller
     {
         private readonly ITripService _tripService;
+        //private readonly IMedaitor _mediator;
         public TripController(ITripService tripService)
         {
             _tripService = tripService;
@@ -21,7 +23,6 @@ namespace TripsApp.Api.Controllers
             //TODO Validate dto
             var trip = new Trip
             {
-                TripId = tripDto.Id,
                 CountryId = tripDto.CountryId,
                 Distance = tripDto.Distance,
                 TimeStamp = tripDto.TimeStamp,
@@ -40,11 +41,10 @@ namespace TripsApp.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/trip/vehicle/{id}")]
-        public async Task<IActionResult> GetTripSummaryAsync([FromQuery] TripRequest tripRequest)
+        [Route("/trip/vehicle/{id}/daterange/{startDate}/{endDate}")]
+        public async Task<IActionResult> GetTripSummaryAsync(Guid id, DateTime startDate, DateTime endDate)
         {
-            //return TripResponse from service with aggregated data.
-            var result = await _tripService.GetTripsSummaryAsync(tripRequest.VehicleId, tripRequest.StartDate, tripRequest.EndDate);
+            var result = await _tripService.GetTripsSummaryAsync(id, startDate, endDate);
 
             if (result == null)
             {
@@ -55,7 +55,9 @@ namespace TripsApp.Api.Controllers
             {
                 VehicleId = result.VehicleId,
                 CalculatedCost = result.CalculatedCost,
-                TotalKms = result.TotalKms
+                TotalKms = result.TotalKms,
+                CountryName = result.Country,
+                EstimatedCost = result.EstimatedCost
             };
 
             return Ok(value);

@@ -2,13 +2,11 @@
 {
     public class Trip : Entity
     {
-        public Guid TripId { get; set; }
+        public string VehicleId { get; set; }
 
-        public Guid VehicleId { get; set; }
+        public double Distance { get; set; }
 
-        public decimal Distance { get; set; }
-
-        public int CountryId { get; set; }
+        public Int32 CountryId { get; set; }
 
         public DateTime TimeStamp { get; set; }
     }
