@@ -10,7 +10,7 @@ namespace TripsApp.Mongo.Repository
         {
         }
 
-        public async Task<decimal> GetAsync()
+        public async Task<double> GetAsync()
         {
             var collection = GetCollection();
 

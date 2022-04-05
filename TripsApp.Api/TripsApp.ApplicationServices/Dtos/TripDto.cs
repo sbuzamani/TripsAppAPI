@@ -1,4 +1,4 @@
-﻿namespace TripsApp.Api.Dtos
+﻿namespace TripsApp.ApplicationServices.Dtos
 {
     public class TripDto
     {

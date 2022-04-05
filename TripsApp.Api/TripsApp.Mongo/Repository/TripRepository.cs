@@ -12,10 +12,8 @@ namespace TripsApp.Mongo.Repository
 
         public override async Task<IEnumerable<Trip>> ListAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            IEnumerable<Trip> trips = new List<Trip>();
             var collection = GetCollection();
-            var stringId = vehicleId.ToString();
-            var filter = Builders<Trip>.Filter.Eq("vehicleId", stringId) &
+            var filter = Builders<Trip>.Filter.Eq("VehicleId", vehicleId) &
             Builders<Trip>.Filter.Gte(x => x.TimeStamp, startDate) & Builders<Trip>.Filter.Lte(x => x.TimeStamp, endDate);
 
             var result = await collection.Find(filter).ToListAsync();

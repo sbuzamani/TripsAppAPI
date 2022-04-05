@@ -1,8 +1,12 @@
-﻿namespace TripsApp.Mongo.Entities
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace TripsApp.Mongo.Entities
 {
     public class Trip : Entity
     {
-        public string VehicleId { get; set; }
+        [BsonRepresentation(BsonType.Binary)]
+        public Guid VehicleId { get; set; }
 
         public double Distance { get; set; }
 
