@@ -1,5 +1,5 @@
 ﻿using System;
-using TripsApp.Api.Dtos;
+using TripsApp.ApplicationServices.Dtos;
 using TripsApp.ApplicationServices.Services;
 
 namespace TripsApp.UnitTests.MockData
@@ -21,8 +21,8 @@ namespace TripsApp.UnitTests.MockData
             return new TripResponse
             {
                 VehicleId = new Guid(),
-                CalculatedCost = 99.9M,
-                TotalKms = 99.9M
+                CalculatedCost = 99.9,
+                TotalDistance = 99.9
             };
         }
 
@@ -31,8 +31,8 @@ namespace TripsApp.UnitTests.MockData
             return new VehicleSummary
             {
                 VehicleId = Guid.NewGuid(),
-                CalculatedCost = 5M,
-                TotalKms = 5M
+                CalculatedCost = 5,
+                TotalDistance = 5
             };
         }
 
@@ -42,7 +42,7 @@ namespace TripsApp.UnitTests.MockData
             {
                 VehicleId = Guid.NewGuid(),
                 CountryId = 1,
-                Distance = 5M,
+                Distance = 5,
                 TimeStamp = DateTime.Now
             };
         }

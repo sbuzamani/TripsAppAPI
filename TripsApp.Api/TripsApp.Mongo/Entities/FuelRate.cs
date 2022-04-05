@@ -2,6 +2,6 @@
 {
     public class FuelRate : Entity
     {
-        public decimal Rate { get; set; }
+        public double Rate { get; set; }
     }
 }

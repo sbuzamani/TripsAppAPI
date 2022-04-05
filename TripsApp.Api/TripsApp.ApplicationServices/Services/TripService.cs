@@ -82,14 +82,14 @@ namespace TripsApp.ApplicationServices.Services
             {
                 CalculatedCost = totalCost,
                 VehicleId = trips.First().VehicleId,
-                TotalKms = totalDistance,
+                TotalDistance = totalDistance,
                 EstimatedCost = estimatedCost,
                 Country = countryName?.Name,
             };
         }
-        private decimal CalculateTotalDistance(IEnumerable<Trip> trips)
+        private double CalculateTotalDistance(IEnumerable<Trip> trips)
         {
-            var result = 0M;
+            var result = 0.0;
 
             foreach (var trip in trips)
             {

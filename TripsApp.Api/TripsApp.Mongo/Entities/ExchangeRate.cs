@@ -4,7 +4,7 @@
     {
         public int CountryId { get; set; }
 
-        public decimal Rate { get; set; }
+        public double Rate { get; set; }
 
         public string CurrencyCode { get; set; }
     }

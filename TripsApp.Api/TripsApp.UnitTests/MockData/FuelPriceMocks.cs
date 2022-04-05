@@ -8,7 +8,7 @@ namespace TripsApp.UnitTests.MockData
         {
             return new FuelPrice
             {
-                Price = 5.99M,
+                Price = 5.99,
                 CountryId = 3,
                 Id = ""
             };

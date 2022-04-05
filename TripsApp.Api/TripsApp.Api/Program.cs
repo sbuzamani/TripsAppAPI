@@ -1,4 +1,5 @@
 using TripsApp.Api.Constants;
+using TripsApp.Api.Extensions;
 using TripsApp.ApplicationServices.IoC;
 using TripsApp.ApplicationServices.Services;
 using TripsApp.Mongo.Interfaces;
@@ -37,6 +38,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
+builder.Services.AddMediatRApi();
 
 var app = builder.Build();
 

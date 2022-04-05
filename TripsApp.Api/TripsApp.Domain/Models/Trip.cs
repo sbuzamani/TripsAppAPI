@@ -4,7 +4,7 @@
     {
         public Guid VehicleId { get; set; }
 
-        public decimal Distance { get; set; }
+        public double Distance { get; set; }
 
         public int CountryId { get; set; }
 

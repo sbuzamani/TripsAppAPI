@@ -9,7 +9,7 @@ namespace TripsApp.UnitTests.MockData
             return new FuelRate
             {
                 Id = "",
-                Rate = 2M
+                Rate = 2
             };
         }
     }

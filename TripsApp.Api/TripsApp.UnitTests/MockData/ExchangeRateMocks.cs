@@ -11,7 +11,7 @@ namespace TripsApp.UnitTests.MockData
                 CountryId = 3,
                 CurrencyCode = "DZM",
                 Id = "",
-                Rate = 5.99M
+                Rate = 5.99
             };
         }
         public static ExchangeRate GetZeroExchangeRate()
@@ -21,7 +21,7 @@ namespace TripsApp.UnitTests.MockData
                 CountryId = 3,
                 CurrencyCode = "DZM",
                 Id = "",
-                Rate = 0M
+                Rate = 0
             };
         }
     }
