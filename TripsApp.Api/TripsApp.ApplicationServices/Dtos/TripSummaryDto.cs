@@ -1,6 +1,6 @@
 ﻿namespace TripsApp.ApplicationServices.Dtos
 {
-    public class TripResponse
+    public class TripSummaryDto
     {
         public Guid VehicleId { get; set; }
 

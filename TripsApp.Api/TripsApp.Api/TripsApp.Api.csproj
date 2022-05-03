@@ -23,8 +23,4 @@
     <ProjectReference Include="..\TripsApp.Mongo\TripsApp.Mongo.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\" />
-  </ItemGroup>
-
 </Project>

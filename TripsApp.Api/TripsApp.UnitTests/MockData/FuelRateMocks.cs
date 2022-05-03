@@ -1,4 +1,5 @@
-﻿using TripsApp.Mongo.Entities;
+﻿using System;
+using TripsApp.Mongo.Entities;
 
 namespace TripsApp.UnitTests.MockData
 {
@@ -8,7 +9,7 @@ namespace TripsApp.UnitTests.MockData
         {
             return new FuelRate
             {
-                Id = "",
+                Id = Guid.NewGuid(),
                 Rate = 2
             };
         }

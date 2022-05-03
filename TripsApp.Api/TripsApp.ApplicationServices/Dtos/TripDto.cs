@@ -6,7 +6,7 @@
 
         public decimal Distance { get; set; }
 
-        public int CountryId { get; set; }
+        public Guid CountryId { get; set; }
 
         public DateTime TimeStamp { get; set; }
     }

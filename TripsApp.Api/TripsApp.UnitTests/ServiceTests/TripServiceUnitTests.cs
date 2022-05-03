@@ -74,34 +74,34 @@ namespace TripsApp.UnitTests.ServiceTests
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetTripEntityList();
-            _mockTripRepository.Setup(x => x.ListAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
+            _mockTripRepository.Setup(x => x.GetTripAggregationAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
             _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(2);
-            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(CountryMocks.GetOneCountry());
-            _mockFuelPriceRepository.Setup(x => x.GetFuelPriceAsync(It.IsAny<int>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
+            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
+            _mockFuelPriceRepository.Setup(x => x.GetFuelPriceAsync(It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
             _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(FuelRateMocks.GetOneFuelRate().Rate);
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
-            Assert.Equal(33, result?.TotalDistance);
-            Assert.Equal("11840433", result?.CalculatedCost.ToString().Where(char.IsDigit));
+            Assert.Equal(35, result?.TotalDistance);
+            Assert.Equal("12558035", result?.CalculatedCost.ToString().Where(char.IsDigit));
             Assert.NotNull(result);
         }
 
         [Fact]
         public async Task GetTripsSummaryAsync_NoExchangeRateAndCost_ReturnsVehicleTripSummaryWithZeroCost()
         {
-            var vehicleId = Guid.NewGuid();
+            var vehicleId = Guid.Parse("a5fcd4ae-13b5-4963-a9d3-619f0d390bee");
             var tripEntities = TripsMocks.GetTripEntityList();
-            _mockTripRepository.Setup(x => x.ListAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(ExchangeRateMocks.GetZeroExchangeRate());
-            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(CountryMocks.GetOneCountry());
-            _mockFuelPriceRepository.Setup(x => x.GetFuelPriceAsync(It.IsAny<int>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
+            _mockTripRepository.Setup(x => x.GetTripAggregationAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetZeroExchangeRate());
+            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
+            _mockFuelPriceRepository.Setup(x => x.GetFuelPriceAsync(It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
             _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(FuelRateMocks.GetOneFuelRate().Rate);
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
-            Assert.Equal(33, result?.TotalDistance);
+            Assert.Equal(35, result?.TotalDistance);
             Assert.Equal(0, result?.CalculatedCost);
             Assert.NotNull(result);
         }
@@ -109,12 +109,12 @@ namespace TripsApp.UnitTests.ServiceTests
         [Fact]
         public async Task GetTripsSummaryAsync_ZeroDistanceTrips_ReturnsVehicleTripSummaryWithZeroTotalDistance()
         {
-            var vehicleId = Guid.NewGuid();
-            var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
-            _mockTripRepository.Setup(x => x.ListAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
-            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<int>())).ReturnsAsync(CountryMocks.GetOneCountry());
-            _mockFuelPriceRepository.Setup(x => x.GetFuelPriceAsync(It.IsAny<int>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
+            var vehicleId = Guid.Parse("8ded079c-1ff5-4344-a4dc-a61368be057b");
+            var tripEntities = TripsMocks.GetZeroTotalDistanceTripAggregation();
+            _mockTripRepository.Setup(x => x.GetTripAggregationAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
+            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
+            _mockFuelPriceRepository.Setup(x => x.GetFuelPriceAsync(It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
             _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(FuelRateMocks.GetOneFuelRate().Rate);
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
@@ -126,7 +126,7 @@ namespace TripsApp.UnitTests.ServiceTests
         public async Task GetTripsSummaryAsync_RepositoryThrowsException_ReturnsNull()
         {
             var vehicleId = Guid.NewGuid();
-            var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
+            var tripEntities = TripsMocks.GetZeroTotalDistanceTripAggregation();
             _mockTripRepository.Setup(x => x.ListAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ThrowsAsync(new Exception());
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
@@ -138,7 +138,7 @@ namespace TripsApp.UnitTests.ServiceTests
         public async Task GetTripsSummaryAsync_RepositoryReturnsNoZeroResults_ReturnsNull()
         {
             var vehicleId = Guid.NewGuid();
-            var tripEntities = TripsMocks.GetZeroDistanceTripEntityList();
+            var tripEntities = TripsMocks.GetZeroTotalDistanceTripAggregation();
             _mockTripRepository.Setup(x => x.ListAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(new List<Mongo.Entities.Trip>());
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);

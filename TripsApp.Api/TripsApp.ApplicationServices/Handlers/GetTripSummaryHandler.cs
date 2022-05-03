@@ -6,7 +6,7 @@ using TripsApp.ApplicationServices.Services;
 
 namespace TripsApp.Api.Handlers
 {
-    public class GetTripSummaryHandler : IRequestHandler<GetTripSummaryQuery, TripResponse>
+    public class GetTripSummaryHandler : IRequestHandler<GetTripSummaryQuery, TripSummaryDto>
     {
         private readonly ITripService _tripService;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace TripsApp.Api.Handlers
             _mapper = mapper;
         }
 
-        public async Task<TripResponse> Handle(GetTripSummaryQuery request, CancellationToken cancellationToken)
+        public async Task<TripSummaryDto> Handle(GetTripSummaryQuery request, CancellationToken cancellationToken)
         {
             var result = await _tripService.GetTripsSummaryAsync(request.VehicleId, request.StartDate, request.EndDate);
 
@@ -25,7 +25,7 @@ namespace TripsApp.Api.Handlers
                 return null;
             }
 
-            return _mapper.Map<TripResponse>(result);
+            return _mapper.Map<TripSummaryDto>(result);
         }
     }
 }

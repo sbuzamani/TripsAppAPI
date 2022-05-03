@@ -11,7 +11,8 @@ namespace TripsApp.ApplicationServices.Mapper
         {
             CreateMap<Trip, Mongo.Entities.Trip>().ReverseMap();
             CreateMap<TripDto, Trip>().ReverseMap();
-            CreateMap<TripResponse, VehicleSummary>().ReverseMap();
+            CreateMap<TripSummaryDto, VehicleSummary>().ReverseMap();
+            CreateMap<TripAggregation, Mongo.Entities.TripAggregation>().ReverseMap();
         }
     }
 }

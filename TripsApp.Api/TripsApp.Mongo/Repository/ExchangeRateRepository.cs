@@ -10,7 +10,7 @@ namespace TripsApp.Mongo.Repository
         {
         }
 
-        public override async Task<ExchangeRate> GetAsync(int countryId)
+        public override async Task<ExchangeRate> GetAsync(Guid countryId)
         {
             var collection = GetCollection();
 

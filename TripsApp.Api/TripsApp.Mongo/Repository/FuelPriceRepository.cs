@@ -10,7 +10,7 @@ namespace TripsApp.Mongo.Repository
         {
         }
 
-        public async Task<FuelPrice> GetFuelPriceAsync(int countryId)
+        public async Task<FuelPrice> GetFuelPriceAsync(Guid countryId)
         {
             var collection = GetCollection();
 
