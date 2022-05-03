@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System.Linq.Expressions;
 using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
 
@@ -26,11 +27,11 @@ namespace TripsApp.Mongo.Repository
             return true;
         }
 
-        public virtual async Task<T> GetAsync(Guid id)
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> field, Guid id)
         {
             var collection = GetCollection();
 
-            var filter = Builders<T>.Filter.Eq("_id", id);
+            var filter = Builders<T>.Filter.Eq(field => field.Id, id);
 
             var result = await collection.FindAsync(filter);
 

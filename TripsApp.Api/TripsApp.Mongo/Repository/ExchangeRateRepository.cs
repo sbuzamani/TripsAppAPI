@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System.Linq.Expressions;
 using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
 
@@ -10,11 +11,11 @@ namespace TripsApp.Mongo.Repository
         {
         }
 
-        public override async Task<ExchangeRate> GetAsync(Guid countryId)
+        public override async Task<ExchangeRate> GetAsync(Expression<Func<ExchangeRate, bool>> field, Guid countryId)
         {
             var collection = GetCollection();
 
-            var filter = Builders<ExchangeRate>.Filter.Eq(x => x.CountryId, countryId);
+            var filter = Builders<ExchangeRate>.Filter.Eq(field => field.CountryId, countryId);
 
             var result = await collection.FindAsync(filter);
 

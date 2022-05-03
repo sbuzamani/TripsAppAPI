@@ -4,9 +4,11 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TripsApp.ApplicationServices.Mapper;
 using TripsApp.ApplicationServices.Services;
+using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
 using TripsApp.UnitTests.MockData;
 using Xunit;
@@ -19,7 +21,6 @@ namespace TripsApp.UnitTests.ServiceTests
         private Mock<ITripRepository> _mockTripRepository;
         private Mock<IExchangeRateRepository> _mockExchangeRateRepository;
         private Mock<ICountryRepository> _mockCountryRepository;
-        private Mock<IFuelRateRepository> _mockFuelRateRepository;
         private Mock<IFuelPriceRepository> _mockFuelPriceRepository;
         private Mock<ILogger<TripService>> _logger;
         public TripServiceUnitTests()
@@ -29,10 +30,9 @@ namespace TripsApp.UnitTests.ServiceTests
             _mockTripRepository = new Mock<ITripRepository>();
             _mockExchangeRateRepository = new Mock<IExchangeRateRepository>();
             _mockCountryRepository = new Mock<ICountryRepository>();
-            _mockFuelRateRepository = new Mock<IFuelRateRepository>();
             _mockFuelPriceRepository = new Mock<IFuelPriceRepository>();
             _tripService = new TripService(mapper, _logger.Object, _mockTripRepository.Object,
-                _mockExchangeRateRepository.Object, _mockCountryRepository.Object, _mockFuelRateRepository.Object,
+                _mockExchangeRateRepository.Object, _mockCountryRepository.Object,
                 _mockFuelPriceRepository.Object);
         }
 
@@ -75,11 +75,9 @@ namespace TripsApp.UnitTests.ServiceTests
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetTripAggregation();
             _mockTripRepository.Setup(x => x.GetTripAggregationAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
-            _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(2);
-            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
-            _mockFuelPriceRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
-            _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(FuelRateMocks.GetOneFuelRate().Rate);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<ExchangeRate, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
+            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Country, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
+            _mockFuelPriceRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<FuelPrice, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
@@ -94,10 +92,9 @@ namespace TripsApp.UnitTests.ServiceTests
             var vehicleId = Guid.Parse("a5fcd4ae-13b5-4963-a9d3-619f0d390bee");
             var tripEntities = TripsMocks.GetTripAggregation();
             _mockTripRepository.Setup(x => x.GetTripAggregationAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetZeroExchangeRate());
-            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
-            _mockFuelPriceRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
-            _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(FuelRateMocks.GetOneFuelRate().Rate);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<ExchangeRate, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetZeroExchangeRate());
+            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Country, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
+            _mockFuelPriceRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<FuelPrice, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
@@ -112,10 +109,9 @@ namespace TripsApp.UnitTests.ServiceTests
             var vehicleId = Guid.Parse("8ded079c-1ff5-4344-a4dc-a61368be057b");
             var tripEntities = TripsMocks.GetZeroTotalDistanceTripAggregation();
             _mockTripRepository.Setup(x => x.GetTripAggregationAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(tripEntities);
-            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
-            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
-            _mockFuelPriceRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
-            _mockFuelRateRepository.Setup(x => x.GetAsync()).ReturnsAsync(FuelRateMocks.GetOneFuelRate().Rate);
+            _mockExchangeRateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<ExchangeRate, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(ExchangeRateMocks.GetExchangeRate());
+            _mockCountryRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Country, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(CountryMocks.GetOneCountry());
+            _mockFuelPriceRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<FuelPrice, bool>>>(), It.IsAny<Guid>())).ReturnsAsync(FuelPriceMocks.GetOneFuelPrice());
 
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 

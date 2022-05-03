@@ -24,10 +24,6 @@ builder.Services.AddTransient<IExchangeRateRepository>(c =>
 {
     return new ExchangeRateRepository(connectionString, databaseName);
 });
-builder.Services.AddTransient<IFuelRateRepository>(c =>
-{
-    return new FuelRateRepository(connectionString, databaseName);
-});
 builder.Services.AddTransient<IFuelPriceRepository>(c =>
 {
     return new FuelPriceRepository(connectionString, databaseName);

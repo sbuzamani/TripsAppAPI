@@ -12,10 +12,10 @@ namespace TripsApp.ApplicationServices.Services
         private readonly ITripRepository _tripRepository;
         private readonly IExchangeRateRepository _exchangeRateRepository;
         private readonly ICountryRepository _countryRepository;
-        private readonly IFuelRateRepository _fuelRateRepository;
         private readonly IFuelPriceRepository _fuelPriceRepository;
+        private const int costPerKilometer = 2;
         public TripService(IMapper mapper, ILogger<TripService> logger, ITripRepository tripRepository,
-            IExchangeRateRepository exchangeRateRepository, ICountryRepository countryRepository, IFuelRateRepository fuelRateRepository,
+            IExchangeRateRepository exchangeRateRepository, ICountryRepository countryRepository,
             IFuelPriceRepository fuelPriceRepository)
         {
             _mapper = mapper;
@@ -23,7 +23,6 @@ namespace TripsApp.ApplicationServices.Services
             _tripRepository = tripRepository;
             _exchangeRateRepository = exchangeRateRepository;
             _countryRepository = countryRepository;
-            _fuelRateRepository = fuelRateRepository;
             _fuelPriceRepository = fuelPriceRepository;
         }
 
@@ -69,10 +68,9 @@ namespace TripsApp.ApplicationServices.Services
         }
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(TripAggregation tripAggregation)
         {
-            var exchangeRate = await _exchangeRateRepository.GetAsync(tripAggregation.CountryId);
-            var costPerKilometer = await _fuelRateRepository.GetAsync();
-            var fuelPrice = await _fuelPriceRepository.GetAsync(tripAggregation.CountryId);
-            var country = await _countryRepository.GetAsync(tripAggregation.CountryId);
+            var exchangeRate = await _exchangeRateRepository.GetAsync(x => x.CountryId.Equals(tripAggregation.CountryId), tripAggregation.CountryId);
+            var fuelPrice = await _fuelPriceRepository.GetAsync(x => x.CountryId.Equals(tripAggregation.CountryId), tripAggregation.CountryId);
+            var country = await _countryRepository.GetAsync(x => x.Id.Equals(tripAggregation.CountryId), tripAggregation.CountryId);
             var totalDistance = tripAggregation.TotalDistance;
             var totalCost = exchangeRate.Rate * (fuelPrice.Price * totalDistance);
             var estimatedCost = totalDistance * costPerKilometer;
@@ -87,3 +85,4 @@ namespace TripsApp.ApplicationServices.Services
             };
         }
     }
+}
