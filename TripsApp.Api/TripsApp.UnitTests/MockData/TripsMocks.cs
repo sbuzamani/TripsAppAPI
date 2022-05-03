@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using TripsApp.Domain.Models;
 
 namespace TripsApp.UnitTests.MockData
@@ -17,34 +16,7 @@ namespace TripsApp.UnitTests.MockData
             };
         }
 
-        public static IEnumerable<Trip> GetTripList()
-        {
-            return new List<Trip>()
-            {
-                new Trip{
-                    CountryId = Guid.NewGuid(),
-                    Distance = 30.3,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Trip
-                {
-                    CountryId = Guid.NewGuid(),
-                    Distance = 35.53,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Trip
-                {
-                    CountryId = Guid.NewGuid(),
-                    Distance = 500.8,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                }
-            };
-        }
-
-        public static Mongo.Entities.TripAggregation GetTripEntityList()
+        public static Mongo.Entities.TripAggregation GetTripAggregation()
         {
             return new Mongo.Entities.TripAggregation
             {
