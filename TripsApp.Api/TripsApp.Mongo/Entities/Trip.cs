@@ -10,7 +10,8 @@ namespace TripsApp.Mongo.Entities
 
         public double Distance { get; set; }
 
-        public Int32 CountryId { get; set; }
+        [BsonRepresentation(BsonType.Binary)]
+        public Guid CountryId { get; set; }
 
         public DateTime TimeStamp { get; set; }
     }

@@ -5,8 +5,7 @@ namespace TripsApp.Mongo.Entities
 {
     public abstract class Entity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public virtual string Id { get; set; }
+        [BsonRepresentation(BsonType.Binary)]
+        public virtual Guid Id { get; set; }
     }
 }

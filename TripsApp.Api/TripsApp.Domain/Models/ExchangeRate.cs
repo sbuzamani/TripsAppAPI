@@ -2,7 +2,7 @@
 {
     public class ExchangeRate
     {
-        public int CountryId { get; set; }
+        public Guid CountryId { get; set; }
 
         public decimal Rate { get; set; }
 

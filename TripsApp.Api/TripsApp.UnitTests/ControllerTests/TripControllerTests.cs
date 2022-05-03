@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TripsApp.Api.Commands;
@@ -61,10 +62,15 @@ namespace TripsApp.UnitTests.ControllerTests
         public async Task GetTripSummaryAsync_ValidRequest_ReturnsTripsResponse()
         {
             _mockMediator.Setup(x => x.Send(It.IsAny<GetTripSummaryQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(DtoMocks.TripResponseMock());
-            var requestParameters = DtoMocks.TripRequestMock();
+            var requestParameters = new
+            {
+                VehicleId = new Guid(),
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now
+            };
 
             var result = (OkObjectResult)await _tripController.GetTripSummaryAsync(requestParameters.VehicleId, requestParameters.StartDate, requestParameters.EndDate);
-            var value = (TripResponse)result?.Value;
+            var value = (TripSummaryDto)result?.Value;
             Assert.NotNull(result);
             Assert.Equal(99.9, value?.TotalDistance);
             Assert.IsType<OkObjectResult>(result);
@@ -73,8 +79,13 @@ namespace TripsApp.UnitTests.ControllerTests
         [Fact]
         public async Task GetTripSummaryAsync_InvalidRequest_ReturnsNoContentResponse()
         {
-            _mockMediator.Setup(x => x.Send(It.IsAny<GetTripSummaryQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync((TripResponse?)null);
-            var requestParameters = DtoMocks.TripRequestMock();
+            _mockMediator.Setup(x => x.Send(It.IsAny<GetTripSummaryQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync((TripSummaryDto?)null);
+            var requestParameters = new
+            {
+                VehicleId = new Guid(),
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now
+            };
 
             var result = await _tripController.GetTripSummaryAsync(requestParameters.VehicleId, requestParameters.StartDate, requestParameters.EndDate);
 

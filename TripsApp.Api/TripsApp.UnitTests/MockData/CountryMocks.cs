@@ -1,4 +1,5 @@
-﻿using TripsApp.Mongo.Entities;
+﻿using System;
+using TripsApp.Mongo.Entities;
 
 namespace TripsApp.UnitTests.MockData
 {
@@ -8,8 +9,7 @@ namespace TripsApp.UnitTests.MockData
         {
             return new Country
             {
-                CountryId = 1,
-                Id = "",
+                Id = Guid.Parse("65069da9-608e-4303-b15f-bc63884d1d2e"),
                 Name = "Zamunda"
             };
         }

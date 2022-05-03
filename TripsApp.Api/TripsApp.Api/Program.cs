@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using TripsApp.Api.Constants;
 using TripsApp.Api.Extensions;
 using TripsApp.ApplicationServices.IoC;
@@ -39,6 +40,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddMediatRApi();
+builder.Services.AddFluentValidation(FluentValidationMvcConfiguration =>
+FluentValidationMvcConfiguration.RegisterValidatorsFromAssemblyContaining<IStartup>());
 
 var app = builder.Build();
 

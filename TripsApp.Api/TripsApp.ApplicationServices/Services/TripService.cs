@@ -46,57 +46,45 @@ namespace TripsApp.ApplicationServices.Services
 
         public async Task<VehicleSummary?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            IEnumerable<Mongo.Entities.Trip> trips = new List<Mongo.Entities.Trip>();
+            var tripAggregation = new Mongo.Entities.TripAggregation();
 
             try
             {
-                trips = await _tripRepository.ListAsync(vehicleId, startDate, endDate);
+                tripAggregation = await _tripRepository.GetTripAggregationAsync(vehicleId, startDate, endDate);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, $"Unable to complete query {vehicleId}");
             }
 
-            if (!trips.Any() || trips == null)
+            if (tripAggregation == null)
             {
                 return null;
             }
 
-            var result = _mapper.Map<List<Trip>>(trips);
+            var result = _mapper.Map<TripAggregation>(tripAggregation);
             var tripSummary = await CalculateTripsSummaryAsync(result);
 
             return tripSummary;
         }
-        private async Task<VehicleSummary> CalculateTripsSummaryAsync(IEnumerable<Trip> trips)
+        private async Task<VehicleSummary> CalculateTripsSummaryAsync(TripAggregation tripAggregation)
         {
-            var countryId = trips.First().CountryId;
-            var exchangeRate = await _exchangeRateRepository.GetAsync(countryId);
+            var exchangeRate = await _exchangeRateRepository.GetAsync(tripAggregation.CountryId);
             var costPerKilometer = await _fuelRateRepository.GetAsync();
-            var fuelPrice = await _fuelPriceRepository.GetFuelPriceAsync(countryId);
-            var countryName = await _countryRepository.GetAsync(countryId);
-            var totalDistance = CalculateTotalDistance(trips);
+            var fuelPrice = await _fuelPriceRepository.GetFuelPriceAsync(tripAggregation.CountryId);
+            var country = await _countryRepository.GetAsync(tripAggregation.CountryId);
+            var totalDistance = tripAggregation.TotalDistance;
             var totalCost = exchangeRate.Rate * (fuelPrice.Price * totalDistance);
             var estimatedCost = totalDistance * costPerKilometer;
 
             return new VehicleSummary
             {
                 CalculatedCost = totalCost,
-                VehicleId = trips.First().VehicleId,
+                VehicleId = tripAggregation.VehicleId,
                 TotalDistance = totalDistance,
                 EstimatedCost = estimatedCost,
-                Country = countryName?.Name,
+                Country = country?.Name,
             };
-        }
-        private double CalculateTotalDistance(IEnumerable<Trip> trips)
-        {
-            var result = 0.0;
-
-            foreach (var trip in trips)
-            {
-                result += trip.Distance;
-            }
-
-            return result;
         }
     }
 }

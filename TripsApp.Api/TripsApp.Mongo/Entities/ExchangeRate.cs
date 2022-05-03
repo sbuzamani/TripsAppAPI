@@ -2,7 +2,7 @@
 {
     public class ExchangeRate : Entity
     {
-        public int CountryId { get; set; }
+        public Guid CountryId { get; set; }
 
         public double Rate { get; set; }
 

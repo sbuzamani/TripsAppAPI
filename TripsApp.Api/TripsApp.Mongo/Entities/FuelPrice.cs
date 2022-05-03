@@ -2,7 +2,7 @@
 {
     public class FuelPrice : Entity
     {
-        public int CountryId { get; set; }
+        public Guid CountryId { get; set; }
 
         public double Price { get; set; }
     }

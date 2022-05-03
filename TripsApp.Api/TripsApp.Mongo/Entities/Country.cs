@@ -2,8 +2,10 @@
 {
     public class Country : Entity
     {
-        public int CountryId { get; set; }
-
         public string Name { get; set; }
+
+        public string Code { get; set; }
+
+        public string CurrencyCode { get; set; }
     }
 }

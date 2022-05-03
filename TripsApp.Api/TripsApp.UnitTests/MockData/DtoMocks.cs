@@ -6,19 +6,9 @@ namespace TripsApp.UnitTests.MockData
 {
     public static class DtoMocks
     {
-        public static TripRequest TripRequestMock()
+        public static TripSummaryDto TripResponseMock()
         {
-            return new TripRequest
-            {
-                VehicleId = new Guid(),
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now
-            };
-        }
-
-        public static TripResponse TripResponseMock()
-        {
-            return new TripResponse
+            return new TripSummaryDto
             {
                 VehicleId = new Guid(),
                 CalculatedCost = 99.9,
@@ -41,7 +31,7 @@ namespace TripsApp.UnitTests.MockData
             return new TripDto
             {
                 VehicleId = Guid.NewGuid(),
-                CountryId = 1,
+                CountryId = Guid.NewGuid(),
                 Distance = 5,
                 TimeStamp = DateTime.Now
             };

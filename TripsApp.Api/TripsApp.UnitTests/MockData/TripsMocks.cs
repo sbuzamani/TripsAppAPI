@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using TripsApp.Domain.Models;
 
 namespace TripsApp.UnitTests.MockData
@@ -10,93 +9,30 @@ namespace TripsApp.UnitTests.MockData
         {
             return new Trip()
             {
-                CountryId = 1,
+                CountryId = Guid.NewGuid(),
                 Distance = 3.3,
                 TimeStamp = DateTime.Now,
                 VehicleId = new Guid()
             };
         }
 
-        public static IEnumerable<Trip> GetTripList()
+        public static Mongo.Entities.TripAggregation GetTripAggregation()
         {
-            return new List<Trip>()
+            return new Mongo.Entities.TripAggregation
             {
-                new Trip{
-                    CountryId = 1,
-                    Distance = 30.3,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Trip
-                {
-                    CountryId = 2,
-                    Distance = 35.53,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Trip
-                {
-                    CountryId = 3,
-                    Distance = 500.8,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                }
+                CountryId = Guid.Parse("65069da9-608e-4303-b15f-bc63884d1d2e"),
+                TotalDistance = 35,
+                VehicleId = Guid.Parse("a5fcd4ae-13b5-4963-a9d3-619f0d390bee")
             };
         }
 
-        public static List<Mongo.Entities.Trip> GetTripEntityList()
+        public static Mongo.Entities.TripAggregation GetZeroTotalDistanceTripAggregation()
         {
-            return new List<Mongo.Entities.Trip>()
+            return new Mongo.Entities.TripAggregation
             {
-                new Mongo.Entities.Trip
-                {
-                    CountryId = 3,
-                    Distance = 12,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Mongo.Entities.Trip
-                {
-                    CountryId = 3,
-                    Distance = 11,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Mongo.Entities.Trip
-                {
-                    CountryId = 3,
-                    Distance = 10,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                }
-            };
-        }
-
-        public static List<Mongo.Entities.Trip> GetZeroDistanceTripEntityList()
-        {
-            return new List<Mongo.Entities.Trip>()
-            {
-                new Mongo.Entities.Trip
-                {
-                    CountryId = 3,
-                    Distance = 0,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Mongo.Entities.Trip
-                {
-                    CountryId = 3,
-                    Distance = 0,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                },
-                new Mongo.Entities.Trip
-                {
-                    CountryId = 3,
-                    Distance = 0,
-                    TimeStamp = DateTime.Now,
-                    VehicleId = new Guid()
-                }
+                CountryId = Guid.Parse("65069da9-608e-4303-b15f-bc63884d1d2e"),
+                TotalDistance = 0,
+                VehicleId = Guid.Parse("8ded079c-1ff5-4344-a4dc-a61368be057b"),
             };
         }
 
@@ -105,7 +41,7 @@ namespace TripsApp.UnitTests.MockData
             return new Trip
             {
                 VehicleId = Guid.NewGuid(),
-                CountryId = 1,
+                CountryId = Guid.NewGuid(),
                 Distance = 5,
                 TimeStamp = DateTime.Now
             };

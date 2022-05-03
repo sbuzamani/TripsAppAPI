@@ -1,4 +1,5 @@
-﻿using TripsApp.Mongo.Entities;
+﻿using System;
+using TripsApp.Mongo.Entities;
 
 namespace TripsApp.UnitTests.MockData
 {
@@ -8,9 +9,9 @@ namespace TripsApp.UnitTests.MockData
         {
             return new ExchangeRate
             {
-                CountryId = 3,
+                CountryId = Guid.Parse("65069da9-608e-4303-b15f-bc63884d1d2e"),
                 CurrencyCode = "DZM",
-                Id = "",
+                Id = Guid.NewGuid(),
                 Rate = 5.99
             };
         }
@@ -18,9 +19,9 @@ namespace TripsApp.UnitTests.MockData
         {
             return new ExchangeRate
             {
-                CountryId = 3,
+                CountryId = Guid.Parse("65069da9-608e-4303-b15f-bc63884d1d2e"),
                 CurrencyCode = "DZM",
-                Id = "",
+                Id = Guid.NewGuid(),
                 Rate = 0
             };
         }

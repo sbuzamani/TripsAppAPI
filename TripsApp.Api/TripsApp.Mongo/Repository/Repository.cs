@@ -26,7 +26,7 @@ namespace TripsApp.Mongo.Repository
             return true;
         }
 
-        public virtual async Task<T> GetAsync(int id)
+        public virtual async Task<T> GetAsync(Guid id)
         {
             var collection = GetCollection();
 

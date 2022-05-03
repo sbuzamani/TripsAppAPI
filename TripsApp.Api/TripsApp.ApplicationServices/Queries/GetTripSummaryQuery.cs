@@ -3,7 +3,7 @@ using TripsApp.ApplicationServices.Dtos;
 
 namespace TripsApp.Api.Queries
 {
-    public class GetTripSummaryQuery : IRequest<TripResponse>
+    public class GetTripSummaryQuery : IRequest<TripSummaryDto>
     {
         public Guid VehicleId { get; set; }
 

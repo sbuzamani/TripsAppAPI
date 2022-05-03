@@ -2,12 +2,12 @@
 {
     public class Vehicle
     {
-        public Guid VehicleId { get; set; }
+        public Guid Id { get; set; }
 
         public string Make { get; set; }
 
         public int Year { get; set; }
 
-        public int CountryId { get; set; }
+        public Guid CountryId { get; set; }
     }
 }

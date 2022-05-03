@@ -10,11 +10,11 @@ namespace TripsApp.Mongo.Repository
         {
         }
 
-        public override async Task<Country> GetAsync(int countryId)
+        public override async Task<Country> GetAsync(Guid countryId)
         {
             var collection = GetCollection();
 
-            var filter = Builders<Country>.Filter.Eq(x => x.CountryId, countryId);
+            var filter = Builders<Country>.Filter.Eq(x => x.Id, countryId);
 
             var result = await collection.FindAsync(filter);
 
