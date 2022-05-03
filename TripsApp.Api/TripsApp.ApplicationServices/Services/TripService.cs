@@ -71,7 +71,7 @@ namespace TripsApp.ApplicationServices.Services
         {
             var exchangeRate = await _exchangeRateRepository.GetAsync(tripAggregation.CountryId);
             var costPerKilometer = await _fuelRateRepository.GetAsync();
-            var fuelPrice = await _fuelPriceRepository.GetFuelPriceAsync(tripAggregation.CountryId);
+            var fuelPrice = await _fuelPriceRepository.GetAsync(tripAggregation.CountryId);
             var country = await _countryRepository.GetAsync(tripAggregation.CountryId);
             var totalDistance = tripAggregation.TotalDistance;
             var totalCost = exchangeRate.Rate * (fuelPrice.Price * totalDistance);
@@ -87,4 +87,3 @@ namespace TripsApp.ApplicationServices.Services
             };
         }
     }
-}
