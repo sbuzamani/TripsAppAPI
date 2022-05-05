@@ -11,11 +11,11 @@ namespace TripsApp.Mongo.Repository
         {
         }
 
-        public override async Task<FuelPrice> GetAsync(Expression<Func<FuelPrice, bool>> field, Guid countryId)
+        public override async Task<FuelPrice> GetAsync(Guid countryId)
         {
             var collection = GetCollection();
 
-            var filter = Builders<FuelPrice>.Filter.Eq(field => field.CountryId, countryId);
+            var filter = Builders<FuelPrice>.Filter.Eq(x => x.CountryId, countryId);
 
             var result = await collection.FindAsync(filter);
 

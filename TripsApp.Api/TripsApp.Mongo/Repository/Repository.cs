@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using System.Linq.Expressions;
 using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
 
@@ -16,37 +15,26 @@ namespace TripsApp.Mongo.Repository
             _database = _client.GetDatabase(databaseName);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var collection = GetCollection();
 
-            var filter = Builders<T>.Filter.Eq("_id", id);
+            var filter = Builders<T>.Filter.Eq(x => x.Id, id);
 
             await collection.DeleteOneAsync(filter);
 
             return true;
         }
 
-        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> field, Guid id)
+        public virtual async Task<T> GetAsync(Guid id)
         {
             var collection = GetCollection();
 
-            var filter = Builders<T>.Filter.Eq(field => field.Id, id);
+            var filter = Builders<T>.Filter.Eq(x => x.Id, id);
 
             var result = await collection.FindAsync(filter);
 
             return result.First();
-        }
-
-        public virtual async Task<IEnumerable<T>> ListAsync(Guid id, DateTime startDate, DateTime endDate)
-        {
-            var collection = GetCollection();
-
-            var filter = Builders<T>.Filter.Eq("_id", id);
-
-            var result = await collection.FindAsync(filter);
-
-            return result.ToList();
         }
 
         public async Task<bool> SaveAsync(T t)
@@ -70,7 +58,7 @@ namespace TripsApp.Mongo.Repository
         {
             var collection = GetCollection();
 
-            var filter = Builders<T>.Filter.Eq("_id", t.Id);
+            var filter = Builders<T>.Filter.Eq(x => x.Id, t.Id);
 
             var result = await collection.ReplaceOneAsync(filter, t);
 

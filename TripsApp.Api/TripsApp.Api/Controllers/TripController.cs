@@ -33,18 +33,8 @@ namespace TripsApp.Api.Controllers
 
         [HttpGet]
         [Route("/trip/vehicle/{id}/daterange/{startDate}/{endDate}")]
-        public async Task<IActionResult> GetTripSummaryAsync(Guid id, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetTripSummaryAsync([FromRoute] Guid id, [FromRoute] DateTime startDate, [FromRoute] DateTime endDate)
         {
-            if (id == null)
-            {
-                return BadRequest();
-            }
-
-            if (startDate == null || endDate == null)
-            {
-                return BadRequest();
-            }
-
             var query = new GetTripSummaryQuery(id, startDate, endDate);
             var result = await _mediator.Send(query);
 

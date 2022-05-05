@@ -53,7 +53,8 @@ namespace TripsApp.ApplicationServices.Services
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"Unable to complete query {vehicleId}");
+                _logger.LogError(e, $"Unable to complete query for {vehicleId}");
+                tripAggregation = null;
             }
 
             if (tripAggregation == null)
@@ -68,9 +69,9 @@ namespace TripsApp.ApplicationServices.Services
         }
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(TripAggregation tripAggregation)
         {
-            var exchangeRate = await _exchangeRateRepository.GetAsync(x => x.CountryId.Equals(tripAggregation.CountryId), tripAggregation.CountryId);
-            var fuelPrice = await _fuelPriceRepository.GetAsync(x => x.CountryId.Equals(tripAggregation.CountryId), tripAggregation.CountryId);
-            var country = await _countryRepository.GetAsync(x => x.Id.Equals(tripAggregation.CountryId), tripAggregation.CountryId);
+            var exchangeRate = await _exchangeRateRepository.GetAsync(tripAggregation.CountryId);
+            var fuelPrice = await _fuelPriceRepository.GetAsync(tripAggregation.CountryId);
+            var country = await _countryRepository.GetAsync(tripAggregation.CountryId);
             var totalDistance = tripAggregation.TotalDistance;
             var totalCost = exchangeRate.Rate * (fuelPrice.Price * totalDistance);
             var estimatedCost = totalDistance * costPerKilometer;

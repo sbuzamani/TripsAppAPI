@@ -1,5 +1,4 @@
-﻿using MongoDB.Driver;
-using TripsApp.Mongo.Entities;
+﻿using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
 
 namespace TripsApp.Mongo.Repository

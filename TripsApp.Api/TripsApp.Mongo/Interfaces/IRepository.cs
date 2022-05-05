@@ -5,8 +5,8 @@ namespace TripsApp.Mongo.Interfaces
     public interface IRepository<T> where T : class
     {
         Task<bool> SaveAsync(T t);
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(Guid id);
         Task<bool> UpdateAsync(T t);
-        Task<T> GetAsync(Expression<Func<T, bool>> field, Guid id);
+        Task<T> GetAsync(Guid id);
     }
 }
