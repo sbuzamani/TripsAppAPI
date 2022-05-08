@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TripsApp.Api.Commands;
 using TripsApp.ApplicationServices.Dtos;
 using TripsApp.Api.Queries;
+using TripsApp.Api.Requests;
 
 namespace TripsApp.Api.Controllers
 {
@@ -32,10 +33,10 @@ namespace TripsApp.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/trip/vehicle/{id}/daterange/{startDate}/{endDate}")]
-        public async Task<IActionResult> GetTripSummaryAsync([FromRoute] Guid id, [FromRoute] DateTime startDate, [FromRoute] DateTime endDate)
+        [Route("/tripsummary")]
+        public async Task<IActionResult> GetTripSummaryAsync([FromQuery] TripSummaryRequest tripSummaryRequest)
         {
-            var query = new GetTripSummaryQuery(id, startDate, endDate);
+            var query = new GetTripSummaryQuery(tripSummaryRequest.VehicleId, tripSummaryRequest.StartDate, tripSummaryRequest.EndDate);
             var result = await _mediator.Send(query);
 
             if (result == null)

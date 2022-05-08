@@ -22,7 +22,6 @@ namespace TripsApp.Mongo.Repository
             .FirstOrDefaultAsync();
 
             var result = await aggregationResult;
-
             return result;
         }
     }

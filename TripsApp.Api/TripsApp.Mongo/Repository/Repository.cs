@@ -21,7 +21,7 @@ namespace TripsApp.Mongo.Repository
 
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
 
-            await collection.DeleteOneAsync(filter);
+            await collection.DeleteOneAsync(filter);//actions and 
 
             return true;
         }
@@ -34,7 +34,7 @@ namespace TripsApp.Mongo.Repository
 
             var result = await collection.FindAsync(filter);
 
-            return result.First();
+            return result.First();//private function 
         }
 
         public async Task<bool> SaveAsync(T t)
@@ -63,6 +63,17 @@ namespace TripsApp.Mongo.Repository
             var result = await collection.ReplaceOneAsync(filter, t);
 
             return true;
+        }
+
+        public virtual async Task<T> GetByCountryIdAsync(Guid countryId)
+        {
+            var collection = GetCollection();
+
+            var filter = Builders<T>.Filter.Eq("CountryId", countryId);
+
+            var result = await collection.FindAsync(filter);
+
+            return result.First();
         }
 
         protected IMongoCollection<T> GetCollection()

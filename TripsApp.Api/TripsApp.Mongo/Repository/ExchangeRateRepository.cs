@@ -10,16 +10,5 @@ namespace TripsApp.Mongo.Repository
         public ExchangeRateRepository(string connectionString, string databaseName) : base(connectionString, databaseName)
         {
         }
-
-        public override async Task<ExchangeRate> GetAsync(Guid countryId)
-        {
-            var collection = GetCollection();
-
-            var filter = Builders<ExchangeRate>.Filter.Eq(x => x.CountryId, countryId);
-
-            var result = await collection.FindAsync(filter);
-
-            return result.FirstOrDefault();
-        }
     }
 }

@@ -31,31 +31,14 @@ namespace TripsApp.ApplicationServices.Services
             var tripEntity = _mapper.Map<Mongo.Entities.Trip>(trip);
             bool result = false;
 
-            try
-            {
-                result = await _tripRepository.SaveAsync(tripEntity);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"failed to save {trip.ToString()}");
-            }
+            result = await _tripRepository.SaveAsync(tripEntity);
 
             return result;
         }
 
         public async Task<VehicleSummary?> GetTripsSummaryAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            var tripAggregation = new Mongo.Entities.TripAggregation();
-
-            try
-            {
-                tripAggregation = await _tripRepository.GetTripAggregationAsync(vehicleId, startDate, endDate);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Unable to complete query for {vehicleId}");
-                tripAggregation = null;
-            }
+            var tripAggregation = await _tripRepository.GetTripAggregationAsync(vehicleId, startDate, endDate);
 
             if (tripAggregation == null)
             {
@@ -69,8 +52,8 @@ namespace TripsApp.ApplicationServices.Services
         }
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(TripAggregation tripAggregation)
         {
-            var exchangeRate = await _exchangeRateRepository.GetAsync(tripAggregation.CountryId);
-            var fuelPrice = await _fuelPriceRepository.GetAsync(tripAggregation.CountryId);
+            var exchangeRate = await _exchangeRateRepository.GetByCountryIdAsync(tripAggregation.CountryId);
+            var fuelPrice = await _fuelPriceRepository.GetByCountryIdAsync(tripAggregation.CountryId);
             var country = await _countryRepository.GetAsync(tripAggregation.CountryId);
             var totalDistance = tripAggregation.TotalDistance;
             var totalCost = exchangeRate.Rate * (fuelPrice.Price * totalDistance);

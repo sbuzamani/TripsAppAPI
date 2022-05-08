@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace TripsApp.Mongo.Interfaces
+﻿namespace TripsApp.Mongo.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -8,5 +6,6 @@ namespace TripsApp.Mongo.Interfaces
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UpdateAsync(T t);
         Task<T> GetAsync(Guid id);
+        Task<T> GetByCountryIdAsync(Guid countryId);
     }
 }

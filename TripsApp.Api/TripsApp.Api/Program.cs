@@ -1,6 +1,10 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using TripsApp.Api.Constants;
 using TripsApp.Api.Extensions;
+using TripsApp.Api.Middleware;
+using TripsApp.Api.Requests;
+using TripsApp.Api.Validators;
 using TripsApp.ApplicationServices.IoC;
 using TripsApp.Mongo.IoC;
 
@@ -20,6 +24,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddMediatRApi();
 builder.Services.AddFluentValidation(FluentValidationMvcConfiguration =>
 FluentValidationMvcConfiguration.RegisterValidatorsFromAssemblyContaining<IStartup>());
+builder.Services.AddTransient<IValidator<TripSummaryRequest>, TripSummaryRequestValidator>();
 
 var app = builder.Build();
 
@@ -29,6 +34,8 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCustomMiddleware(app.Environment);
 
 app.UseHttpsRedirection();
 
