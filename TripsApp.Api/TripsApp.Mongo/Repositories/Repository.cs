@@ -1,18 +1,16 @@
 ﻿using MongoDB.Driver;
 using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
+using TripsApp.Mongo.IoC;
 
-namespace TripsApp.Mongo.Repository
+namespace TripsApp.Mongo.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : Entity
     {
-        private readonly IMongoClient _client;
-
-        private readonly IMongoDatabase _database;
-        public Repository(string connectionString, string databaseName)
+        private readonly IMongoContext _mongoContext;
+        public Repository(IMongoContext mongoContext)
         {
-            _client = new MongoClient(connectionString);
-            _database = _client.GetDatabase(databaseName);
+            _mongoContext = mongoContext;
         }
 
         public async Task<bool> DeleteAsync(Guid id)
@@ -40,16 +38,8 @@ namespace TripsApp.Mongo.Repository
         public async Task<bool> SaveAsync(T t)
         {
             var collection = GetCollection();
-            try
-            {
-                await collection.InsertOneAsync(t);
 
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
+            await collection.InsertOneAsync(t);
 
             return true;
         }
@@ -80,7 +70,7 @@ namespace TripsApp.Mongo.Repository
         {
             var collectionName = GetCollectionName();
 
-            return _database.GetCollection<T>(collectionName);
+            return _mongoContext.GetDatabase().GetCollection<T>(collectionName);
         }
 
         private string GetCollectionName()

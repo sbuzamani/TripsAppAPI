@@ -1,12 +1,13 @@
 ﻿using MongoDB.Driver;
 using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
+using TripsApp.Mongo.IoC;
 
-namespace TripsApp.Mongo.Repository
+namespace TripsApp.Mongo.Repositories
 {
     public class TripRepository : Repository<Trip>, ITripRepository
     {
-        public TripRepository(string connectionString, string databaseName) : base(connectionString, databaseName)
+        public TripRepository(IMongoContext mongoContext) : base(mongoContext)
         {
         }
 

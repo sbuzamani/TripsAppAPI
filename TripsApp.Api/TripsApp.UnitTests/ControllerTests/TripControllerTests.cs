@@ -10,6 +10,7 @@ using TripsApp.Api.Queries;
 using TripsApp.ApplicationServices.Dtos;
 using TripsApp.UnitTests.MockData;
 using Xunit;
+using requestParameters = TripsApp.UnitTests.MockData.TripSummaryRequestMock;
 
 namespace TripsApp.UnitTests.ControllerTests
 {
@@ -62,14 +63,8 @@ namespace TripsApp.UnitTests.ControllerTests
         public async Task GetTripSummaryAsync_ValidRequest_ReturnsTripsResponse()
         {
             _mockMediator.Setup(x => x.Send(It.IsAny<GetTripSummaryQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(DtoMocks.TripResponseMock());
-            var requestParameters = new
-            {
-                VehicleId = new Guid(),
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now
-            };
 
-            var result = (OkObjectResult)await _tripController.GetTripSummaryAsync(requestParameters.VehicleId, requestParameters.StartDate, requestParameters.EndDate);
+            var result = (OkObjectResult)await _tripController.GetTripSummaryAsync(requestParameters.GetTripSummaryRequest());
             var value = (TripSummaryDto)result?.Value;
             Assert.NotNull(result);
             Assert.Equal(99.9, value?.TotalDistance);
@@ -80,14 +75,8 @@ namespace TripsApp.UnitTests.ControllerTests
         public async Task GetTripSummaryAsync_InvalidRequest_ReturnsNoContentResponse()
         {
             _mockMediator.Setup(x => x.Send(It.IsAny<GetTripSummaryQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync((TripSummaryDto?)null);
-            var requestParameters = new
-            {
-                VehicleId = new Guid(),
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now
-            };
 
-            var result = await _tripController.GetTripSummaryAsync(requestParameters.VehicleId, requestParameters.StartDate, requestParameters.EndDate);
+            var result = await _tripController.GetTripSummaryAsync(requestParameters.GetTripSummaryRequest());
 
             Assert.IsType<NoContentResult>(result);
         }

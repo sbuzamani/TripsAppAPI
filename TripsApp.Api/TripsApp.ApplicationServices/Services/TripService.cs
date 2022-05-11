@@ -52,11 +52,14 @@ namespace TripsApp.ApplicationServices.Services
         }
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(TripAggregation tripAggregation)
         {
-            var exchangeRate = await _exchangeRateRepository.GetByCountryIdAsync(tripAggregation.CountryId);
-            var fuelPrice = await _fuelPriceRepository.GetByCountryIdAsync(tripAggregation.CountryId);
-            var country = await _countryRepository.GetAsync(tripAggregation.CountryId);
+            var exchangeRate = _exchangeRateRepository.GetByCountryIdAsync(tripAggregation.CountryId);//1 
+
+            var fuelPrice = _fuelPriceRepository.GetByCountryIdAsync(tripAggregation.CountryId);//2
+
+            var country = _countryRepository.GetAsync(tripAggregation.CountryId);//3
+
             var totalDistance = tripAggregation.TotalDistance;
-            var totalCost = exchangeRate.Rate * (fuelPrice.Price * totalDistance);
+            var totalCost = (await exchangeRate).Rate * (await fuelPrice).Price * totalDistance;
             var estimatedCost = totalDistance * costPerKilometer;
 
             return new VehicleSummary
@@ -65,7 +68,7 @@ namespace TripsApp.ApplicationServices.Services
                 VehicleId = tripAggregation.VehicleId,
                 TotalDistance = totalDistance,
                 EstimatedCost = estimatedCost,
-                Country = country?.Name,
+                Country = (await country).Name,
             };
         }
     }

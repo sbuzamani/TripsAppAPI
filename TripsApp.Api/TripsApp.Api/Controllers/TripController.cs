@@ -33,7 +33,7 @@ namespace TripsApp.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/tripsummary")]
+        [Route("/trip/aggregation")]//REST Aggreetgation endpoint
         public async Task<IActionResult> GetTripSummaryAsync([FromQuery] TripSummaryRequest tripSummaryRequest)
         {
             var query = new GetTripSummaryQuery(tripSummaryRequest.VehicleId, tripSummaryRequest.StartDate, tripSummaryRequest.EndDate);

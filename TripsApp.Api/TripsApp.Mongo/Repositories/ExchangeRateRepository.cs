@@ -2,12 +2,13 @@
 using System.Linq.Expressions;
 using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
+using TripsApp.Mongo.IoC;
 
-namespace TripsApp.Mongo.Repository
+namespace TripsApp.Mongo.Repositories
 {
     public class ExchangeRateRepository : Repository<ExchangeRate>, IExchangeRateRepository
     {
-        public ExchangeRateRepository(string connectionString, string databaseName) : base(connectionString, databaseName)
+        public ExchangeRateRepository(IMongoContext mongoContext) : base(mongoContext)
         {
         }
     }

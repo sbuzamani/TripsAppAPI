@@ -2,12 +2,13 @@
 using System.Linq.Expressions;
 using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
+using TripsApp.Mongo.IoC;
 
-namespace TripsApp.Mongo.Repository
+namespace TripsApp.Mongo.Repositories
 {
     public class FuelPriceRepository : Repository<FuelPrice>, IFuelPriceRepository
     {
-        public FuelPriceRepository(string connectionString, string databaseName) : base(connectionString, databaseName)
+        public FuelPriceRepository(IMongoContext mongoContext) : base(mongoContext)
         {
         }
     }

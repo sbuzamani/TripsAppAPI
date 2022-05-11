@@ -5,6 +5,7 @@ using TripsApp.Api.Extensions;
 using TripsApp.Api.Middleware;
 using TripsApp.Api.Requests;
 using TripsApp.Api.Validators;
+using TripsApp.ApplicationServices.Dtos;
 using TripsApp.ApplicationServices.IoC;
 using TripsApp.Mongo.IoC;
 
@@ -25,7 +26,7 @@ builder.Services.AddMediatRApi();
 builder.Services.AddFluentValidation(FluentValidationMvcConfiguration =>
 FluentValidationMvcConfiguration.RegisterValidatorsFromAssemblyContaining<IStartup>());
 builder.Services.AddTransient<IValidator<TripSummaryRequest>, TripSummaryRequestValidator>();
-
+builder.Services.AddTransient<IValidator<TripDto>, SaveTripValidator>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

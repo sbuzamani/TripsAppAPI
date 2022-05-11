@@ -1,11 +1,12 @@
 ﻿using TripsApp.Mongo.Entities;
 using TripsApp.Mongo.Interfaces;
+using TripsApp.Mongo.IoC;
 
-namespace TripsApp.Mongo.Repository
+namespace TripsApp.Mongo.Repositories
 {
     public class CountryRepository : Repository<Country>, ICountryRepository
     {
-        public CountryRepository(string connectionString, string databaseName) : base(connectionString, databaseName)
+        public CountryRepository(IMongoContext mongoContext) : base(mongoContext)
         {
         }
     }
