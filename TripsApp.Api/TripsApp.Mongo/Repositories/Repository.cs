@@ -18,7 +18,7 @@ namespace TripsApp.Mongo.Repositories
 
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
 
-            await collection.DeleteOneAsync(filter);//actions and 
+            await collection.DeleteOneAsync(filter);
 
             return true;
         }
@@ -31,7 +31,7 @@ namespace TripsApp.Mongo.Repositories
 
             var result = await collection.FindAsync(filter);
 
-            return result.First();//private function 
+            return result.First();
         }
 
         public async Task<bool> SaveAsync(T t)
