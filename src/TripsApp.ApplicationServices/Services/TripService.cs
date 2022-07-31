@@ -52,11 +52,11 @@ namespace TripsApp.ApplicationServices.Services
         }
         private async Task<VehicleSummary> CalculateTripsSummaryAsync(TripAggregation tripAggregation)
         {
-            var exchangeRate = _exchangeRateRepository.GetByCountryIdAsync(tripAggregation.CountryId);//1 
+            var exchangeRate = _exchangeRateRepository.GetByCountryIdAsync(tripAggregation.CountryId);
 
-            var fuelPrice = _fuelPriceRepository.GetByCountryIdAsync(tripAggregation.CountryId);//2
+            var fuelPrice = _fuelPriceRepository.GetByCountryIdAsync(tripAggregation.CountryId);
 
-            var country = _countryRepository.GetAsync(tripAggregation.CountryId);//3
+            var country = _countryRepository.GetAsync(tripAggregation.CountryId);
 
             var totalDistance = tripAggregation.TotalDistance;
             var totalCost = (await exchangeRate).Rate * (await fuelPrice).Price * totalDistance;
