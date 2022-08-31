@@ -18,11 +18,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore '**/*.csproj'
+      run: dotnet restore
     - name: Build
-      run: dotnet build '**/*.csproj' --no-restore
+      run: dotnet build --no-restore
     - name: Test
-      run: dotnet test '**/*Tests/*.csproj' --no-build --verbosity normal --TestType Unit
+      run: dotnet test --no-build --verbosity normal --TestType Unit
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag latest
