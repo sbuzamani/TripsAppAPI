@@ -1,6 +1,8 @@
-﻿namespace TripsApp.Mongo.Entities
+﻿using TripsApp.Mongo.Interfaces;
+
+namespace TripsApp.Mongo.Entities
 {
-    public class FuelPrice : Entity
+    public class FuelPrice : Entity, IEntity
     {
         public Guid CountryId { get; set; }
 

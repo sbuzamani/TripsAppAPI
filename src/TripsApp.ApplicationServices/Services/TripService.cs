@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using TripsApp.ApplicationServices.Interfaces;
 using TripsApp.Domain.Models;
 using TripsApp.Mongo.Interfaces;
 

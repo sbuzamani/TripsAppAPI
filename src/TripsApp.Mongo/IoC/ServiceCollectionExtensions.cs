@@ -17,6 +17,7 @@ namespace TripsApp.Mongo.IoC
             serviceCollection.AddTransient<ICountryRepository, CountryRepository>();
             serviceCollection.AddTransient<IExchangeRateRepository, ExchangeRateRepository>();
             serviceCollection.AddTransient<IFuelPriceRepository, FuelPriceRepository>();
+            serviceCollection.AddTransient<IVehicleRepository, VehicleRepository>();
         }
     }
 }

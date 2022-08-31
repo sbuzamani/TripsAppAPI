@@ -7,74 +7,54 @@ namespace TripsApp.Mongo.Repositories
     public abstract class Repository<T> : IRepository<T> where T : Entity
     {
         private readonly IMongoContext _mongoContext;
+        protected IMongoCollection<T> _collection;
         public Repository(IMongoContext mongoContext)
         {
             _mongoContext = mongoContext;
+            _collection = _mongoContext.GetCollection<T>();
         }
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var collection = GetCollection();
-
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
 
-            await collection.DeleteOneAsync(filter);
+            await _collection.DeleteOneAsync(filter);
 
             return true;
         }
 
         public virtual async Task<T> GetAsync(Guid id)
         {
-            var collection = GetCollection();
-
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
 
-            var result = await collection.FindAsync(filter);
+            var result = await _collection.FindAsync(filter);
 
             return result.First();
         }
 
         public async Task<bool> SaveAsync(T t)
         {
-            var collection = GetCollection();
-
-            await collection.InsertOneAsync(t);
+            await _collection.InsertOneAsync(t);
 
             return true;
         }
 
         public async Task<bool> UpdateAsync(T t)
         {
-            var collection = GetCollection();
-
             var filter = Builders<T>.Filter.Eq(x => x.Id, t.Id);
 
-            var result = await collection.ReplaceOneAsync(filter, t);
+            var result = await _collection.ReplaceOneAsync(filter, t);
 
             return true;
         }
 
-        public virtual async Task<T> GetByCountryIdAsync(Guid countryId)
+        public async Task<IEnumerable<T>> ListAsync()
         {
-            var collection = GetCollection();
+            var filter = Builders<T>.Filter.Empty;
 
-            var filter = Builders<T>.Filter.Eq("CountryId", countryId);
+            var result = await _collection.FindAsync(filter);
 
-            var result = await collection.FindAsync(filter);
-
-            return result.First();
-        }
-
-        protected IMongoCollection<T> GetCollection()
-        {
-            var collectionName = GetCollectionName();
-
-            return _mongoContext.GetDatabase().GetCollection<T>(collectionName);
-        }
-
-        private string GetCollectionName()
-        {
-            return typeof(T).Name;
+            return result.ToList();
         }
     }
 }
