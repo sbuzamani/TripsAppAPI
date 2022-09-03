@@ -18,8 +18,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
-      working-directory: src/
+      run: dotnet restore /src/TripsApp.Api/TripsApp.Api.csproj
     - name: Build
       run: dotnet build --no-restore
     - name: Test
