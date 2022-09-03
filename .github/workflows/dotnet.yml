@@ -1,4 +1,4 @@
-name: .NET
+name: Docker Image CI
 
 on:
   push:
@@ -7,19 +7,13 @@ on:
     branches: [ "master" ]
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore ./*/*.csproj
-    - name: Build
-      run: dotnet build ./*/*.cspro' --no-restore
-    - name: Test
-      run: dotnet test ./*/*Tests.csproj --no-build --verbosity normal
+    - name: Build the Docker image
+      run: docker build . --file src/TripsApp.Api/Dockefile --tag trips-api-api:$(date +%s)
+
