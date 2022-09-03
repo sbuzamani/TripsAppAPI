@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore '../*.csproj'
+      run: dotnet restore ./*.csproj
     - name: Build
-      run: dotnet build '../*.csproj' --no-restore
+      run: dotnet build ./*.cspro' --no-restore
     - name: Test
-      run: dotnet test '../*Tests.csproj' --no-build --verbosity normal
+      run: dotnet test ./*Tests.csproj --no-build --verbosity normal
