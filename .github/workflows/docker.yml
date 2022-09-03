@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file src/TripsApp.Api/ --tag trips-api-api:$(date +%s)
+      run: docker build . --file src/TripsApp.Api/Dockerfile. --tag trips-api-api:$(date +%s)
