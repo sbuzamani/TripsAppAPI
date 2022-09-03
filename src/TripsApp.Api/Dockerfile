@@ -7,7 +7,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY [./"TripsApp.Api/TripsApp.Api.csproj", "TripsApp.Api/"]
+#COPY [./"TripsApp.Api/TripsApp.Api.csproj", "TripsApp.Api/"]
+COPY . .
 RUN dotnet restore "TripsApp.Api/TripsApp.Api.csproj"
 COPY . .
 WORKDIR "/src/TripsApp.Api"
