@@ -14,7 +14,7 @@ COPY ./src /app
 RUN dotnet build "app/TripsApp.Api/TripsApp.Api.csproj" -c Release -o app/build
 
 FROM build AS publish
-RUN dotnet publish "TripsApp.Api.csproj" -c Release -o app/publish
+RUN dotnet publish "app/TripsApp.Api/TripsApp.Api.csproj" -c Release -o app/publish
 
 FROM base AS final
 #WORKDIR /app
