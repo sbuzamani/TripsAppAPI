@@ -18,5 +18,5 @@ RUN dotnet publish "app/TripsApp.Api/TripsApp.Api.csproj" -c Release -o app/publ
 
 FROM base AS final
 #WORKDIR /app
-COPY --from=app/publish /app/publish .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TripsApp.Api.dll"]
