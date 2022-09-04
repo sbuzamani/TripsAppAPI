@@ -18,5 +18,5 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: ls -R ${GITHUB_WORKSPACE}
+      run: ls -R
 
