@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: dotnet build **/.csproj --no-restore
     - name: Test
-      run: dotnet test src/TripsApp.UnitTests/TripsApp.UnitTests.csproj --no-build --verbosity normal
+      run: ls ${GITHUB_WORKSPACE}
