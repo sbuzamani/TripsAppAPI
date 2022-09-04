@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file src/Dockerfile --tag my-image-name:$(date +%s)
     - name: Docker Login
       run: docker login --username=sbuzamani --email=sibusiso.zamani@euromonitor.com
     - name: Docker Push
