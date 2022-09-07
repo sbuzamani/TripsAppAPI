@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using TripsApp.ApplicationServices.Interfaces;
 using TripsApp.ApplicationServices.Mapper;
 using TripsApp.ApplicationServices.Services;
 using TripsApp.Mongo.Interfaces;
@@ -12,6 +13,7 @@ using Xunit;
 
 namespace TripsApp.UnitTests.ServiceTests
 {
+    [Trait("TestType", "Unit")]
     public class TripServiceUnitTests
     {
         private readonly ITripService _tripService;

@@ -6,6 +6,6 @@
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UpdateAsync(T t);
         Task<T> GetAsync(Guid id);
-        Task<T> GetByCountryIdAsync(Guid countryId);
+        Task<IEnumerable<T>> ListAsync();
     }
 }

@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "16635a6d-b0c3-401f-b843-d552a2c01bbe",
+    "Name": "France",
+    "Code": "FR",
+    "CurrencyCode": "EUR"
+  },
+  {
+    "_id": "e2e9dfc1-0f1e-48cb-9878-ee89aa9e1283",
+    "Name": "Spain",
+    "Code": "EA",
+    "CurrencyCode": "EUR"
+  }
+]

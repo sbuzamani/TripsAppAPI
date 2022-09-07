@@ -2,7 +2,7 @@
 using MediatR;
 using TripsApp.ApplicationServices.Dtos;
 using TripsApp.Api.Queries;
-using TripsApp.ApplicationServices.Services;
+using TripsApp.ApplicationServices.Interfaces;
 
 namespace TripsApp.Api.Handlers
 {

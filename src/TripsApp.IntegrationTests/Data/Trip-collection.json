@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "6af341fd-62eb-479b-80fa-76830d9c950e",
+    "VehicleId": "d0a86cfc-718d-47bc-884f-6397762e3a0b",
+    "Distance": 1723.81,
+    "TimeStamp": { "$date": "2020-06-11T10:41:58.000Z" }
+  },
+  {
+    "_id": "3c113906-941c-4781-baa3-e735f3c9800a",
+    "VehicleId": "b526698c-6958-4c78-b6da-5e119731a70d",
+    "Distance": 389.63,
+    "TimeStamp": { "$date": "2022-08-05T06:15:37.000Z" }
+  }
+]

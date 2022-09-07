@@ -14,6 +14,7 @@ using requestParameters = TripsApp.UnitTests.MockData.TripSummaryRequestMock;
 
 namespace TripsApp.UnitTests.ControllerTests
 {
+    [Trait("TestType", "Unit")]
     public class TripControllerTests
     {
         private readonly TripController _tripController;
