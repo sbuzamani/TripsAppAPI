@@ -63,9 +63,7 @@ namespace TripsApp.UnitTests.ServiceTests
             _mockTripRepository.Setup(x => x.SaveAsync(It.IsAny<Mongo.Entities.Trip>())).ThrowsAsync(new Exception());
             var trip = TripsMocks.GetTrip();
 
-            var result = await _tripService.SaveTripAsync(trip);
-
-            Assert.False(result);
+            Assert.ThrowsAnyAsync<Exception>(() => _tripService.SaveTripAsync(trip));
         }
 
         [Fact]
@@ -81,7 +79,7 @@ namespace TripsApp.UnitTests.ServiceTests
             var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
 
             Assert.Equal(35, result?.TotalDistance);
-            Assert.Equal("12558035", result?.CalculatedCost.ToString().Where(char.IsDigit));
+            Assert.Equal(Math.Round(1255.8035, 2), Math.Round(result.CalculatedCost, 2));
             Assert.NotNull(result);
         }
 
@@ -118,15 +116,13 @@ namespace TripsApp.UnitTests.ServiceTests
         }
 
         [Fact]
-        public async Task GetTripsSummaryAsync_RepositoryThrowsException_ReturnsNull()
+        public async Task GetTripsSummaryAsync_RepositoryThrowsException_ExceptionThrown()
         {
             var vehicleId = Guid.NewGuid();
             var tripEntities = TripsMocks.GetZeroTotalDistanceTripAggregation();
             _mockTripRepository.Setup(x => x.GetTripAggregationAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ThrowsAsync(new Exception());
 
-            var result = await _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now);
-
-            Assert.Null(result);
+            await Assert.ThrowsAnyAsync<Exception>(() => _tripService.GetTripsSummaryAsync(vehicleId, DateTime.Now.AddMonths(-2), DateTime.Now));
         }
 
         [Fact]
