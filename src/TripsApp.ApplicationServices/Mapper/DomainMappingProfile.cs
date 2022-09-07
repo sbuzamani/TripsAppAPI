@@ -5,6 +5,15 @@ using TripsApp.Domain.Models;
 
 namespace TripsApp.ApplicationServices.Mapper
 {
+    public class Source<T>
+    {
+        public T Value { get; set; }
+    }
+
+    public class Destination<T>
+    {
+        public T Value { get; set; }
+    }
     public class DomainMappingProfile : Profile
     {
         public DomainMappingProfile()
@@ -13,6 +22,8 @@ namespace TripsApp.ApplicationServices.Mapper
             CreateMap<TripDto, Trip>().ReverseMap();
             CreateMap<TripSummaryDto, VehicleSummary>().ReverseMap();
             CreateMap<TripAggregation, Mongo.Entities.TripAggregation>().ReverseMap();
+            CreateMap<Vehicle, Mongo.Entities.Vehicle>().ReverseMap();
+            CreateMap(typeof(Source<>), typeof(Destination<>));
         }
     }
 }

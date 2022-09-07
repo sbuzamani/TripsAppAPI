@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "f754d98a-002c-4558-b269-5ce0f334541e",
+    "CountryId": "16635a6d-b0c3-401f-b843-d552a2c01bbe",
+    "Rate": 9.02,
+    "CurrencyCode": "BMD"
+  },
+  {
+    "_id": "F6DF1136-91EA-483C-81DA-BD15C669676A",
+    "CountryId": "2cb93416-c8fd-4d55-82e6-440b505171d3",
+    "Rate": 10,
+    "CurrencyCode": "BMD"
+  }
+]

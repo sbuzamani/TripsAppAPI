@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using TripsApp.Api.Commands;
-using TripsApp.ApplicationServices.Services;
+using TripsApp.ApplicationServices.Interfaces;
 using TripsApp.Domain.Models;
 
 namespace TripsApp.Api.Handlers

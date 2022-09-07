@@ -1,6 +1,7 @@
-﻿using TripsApp.Domain.Models;
+﻿using TripsApp.ApplicationServices.Services;
+using TripsApp.Domain.Models;
 
-namespace TripsApp.ApplicationServices.Services
+namespace TripsApp.ApplicationServices.Interfaces
 {
     public interface ITripService
     {

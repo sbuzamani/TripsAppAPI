@@ -27,6 +27,7 @@ builder.Services.AddFluentValidation(FluentValidationMvcConfiguration =>
 FluentValidationMvcConfiguration.RegisterValidatorsFromAssemblyContaining<IStartup>());
 builder.Services.AddTransient<IValidator<TripSummaryRequest>, TripSummaryRequestValidator>();
 builder.Services.AddTransient<IValidator<TripDto>, SaveTripValidator>();
+
 var app = builder.Build();
 
 app.UseSwagger();
@@ -35,14 +36,11 @@ app.UseCustomMiddleware(app.Environment);
 app.UseHttpLogging();
 app.UseRouting();
 app.UseAuthorization();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapHealthChecks(PathConstants.HealthCheckPath, new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
-    {
-        Predicate = (check) => check.Tags.Contains("all")
-    });
 });
+app.UseHealthCheck();
+//app.UseHttpsRedirection();
 
 app.Run();

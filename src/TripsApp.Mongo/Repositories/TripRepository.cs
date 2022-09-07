@@ -12,11 +12,10 @@ namespace TripsApp.Mongo.Repositories
 
         public async Task<TripAggregation> GetTripAggregationAsync(Guid vehicleId, DateTime startDate, DateTime endDate)
         {
-            var collection = GetCollection();
             var vehicleFilter = Builders<Trip>.Filter.Eq(x => x.VehicleId, vehicleId);
             var dateFilter = Builders<Trip>.Filter.Gte(x => x.TimeStamp, startDate) & Builders<Trip>.Filter.Lte(x => x.TimeStamp, endDate);
 
-            var aggregationResult = collection.Aggregate().Match(vehicleFilter).Match(dateFilter)
+            var aggregationResult = _collection.Aggregate().Match(vehicleFilter).Match(dateFilter)
             .Group(a => new { a.VehicleId, a.CountryId }, r => new TripAggregation
             { VehicleId = r.First().VehicleId, CountryId = r.First().CountryId, TotalDistance = r.Sum(b => b.Distance) })
             .FirstOrDefaultAsync();

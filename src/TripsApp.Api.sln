@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripsApp.ApplicationService
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripsApp.Mongo", "TripsApp.Mongo\TripsApp.Mongo.csproj", "{0D730334-29F5-4A9E-9241-3E457A1A62E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripsApp.IntegrationTests", "TripsApp.IntegrationTests\TripsApp.IntegrationTests.csproj", "{BAF8F42F-2204-4688-9EC4-883B1E6DBADB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0D730334-29F5-4A9E-9241-3E457A1A62E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D730334-29F5-4A9E-9241-3E457A1A62E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D730334-29F5-4A9E-9241-3E457A1A62E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF8F42F-2204-4688-9EC4-883B1E6DBADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF8F42F-2204-4688-9EC4-883B1E6DBADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF8F42F-2204-4688-9EC4-883B1E6DBADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF8F42F-2204-4688-9EC4-883B1E6DBADB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

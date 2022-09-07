@@ -1,0 +1,359 @@
+openapi: 3.0.1
+info:
+  title: TripsApp API
+  description: The API tracking Vehicles,Countries, Exchange Rates, Fuel Prices, Trips and Vehicle Trip Aggregation. 
+  version: '1'
+  contact: 
+    email: sbuzamani@gmail.com
+tags:
+  - name: Countries
+    description: Track countries data.
+  - name: ExchangeRates
+    description: Track exchange rates for countries.
+  - name: FuelPrices
+    description: Track fuel prices for country.
+  - name: Trips
+    description: Log and Aggregate trips by vehicle and date range.
+  - name: Vehicles
+    description: Track vehicles data.
+security:
+  - Bearer Token: [ ]
+servers:
+  - description: Trips App Server
+    url: tripsapp.co.za/api
+paths:
+  "/api/Country":
+    get:
+      tags:
+      - Country
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+      - Country
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Country"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Country"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Country"
+      responses:
+        '200':
+          description: Success
+  "/api/Country/{id}":
+    get:
+      tags:
+      - Country
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+  "/api/Country/Update":
+    post:
+      tags:
+      - Country
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Country"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Country"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Country"
+      responses:
+        '200':
+          description: Success
+  "/api/ExchangeRate":
+    get:
+      tags:
+      - ExchangeRate
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+      - ExchangeRate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ExchangeRate"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/ExchangeRate"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/ExchangeRate"
+      responses:
+        '200':
+          description: Success
+  "/api/ExchangeRate/{id}":
+    get:
+      tags:
+      - ExchangeRate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+  "/api/ExchangeRate/Update":
+    post:
+      tags:
+      - ExchangeRate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ExchangeRate"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/ExchangeRate"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/ExchangeRate"
+      responses:
+        '200':
+          description: Success
+  "/api/FuelPrice":
+    get:
+      tags:
+      - FuelPrice
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+      - FuelPrice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FuelPrice"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/FuelPrice"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/FuelPrice"
+      responses:
+        '200':
+          description: Success
+  "/api/FuelPrice/{id}":
+    get:
+      tags:
+      - FuelPrice
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+  "/api/FuelPrice/Update":
+    post:
+      tags:
+      - FuelPrice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FuelPrice"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/FuelPrice"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/FuelPrice"
+      responses:
+        '200':
+          description: Success
+  "/trip":
+    post:
+      tags:
+      - Trip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TripDto"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/TripDto"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/TripDto"
+      responses:
+        '200':
+          description: Success
+  "/trip/aggregation":
+    get:
+      tags:
+      - Trip
+      parameters:
+      - name: VehicleId
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: StartDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: EndDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Success
+  "/api/Vehicle":
+    get:
+      tags:
+      - Vehicle
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+      - Vehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle"
+      responses:
+        '200':
+          description: Success
+  "/api/Vehicle/{id}":
+    get:
+      tags:
+      - Vehicle
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+  "/api/Vehicle/Update":
+    post:
+      tags:
+      - Vehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle"
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    Country:
+      type: object
+      properties:
+        countryId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        fuelPrice:
+          type: number
+          format: double
+      additionalProperties: false
+    ExchangeRate:
+      type: object
+      properties:
+        countryId:
+          type: string
+          format: uuid
+        rate:
+          type: number
+          format: double
+        currencyCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FuelPrice:
+      type: object
+      properties:
+        countryId:
+          type: string
+          format: uuid
+        price:
+          type: number
+          format: double
+      additionalProperties: false
+    TripDto:
+      type: object
+      properties:
+        vehicleId:
+          type: string
+          format: uuid
+        distance:
+          type: number
+          format: double
+        countryId:
+          type: string
+          format: uuid
+        timeStamp:
+          type: string
+          format: date-time
+      additionalProperties: false
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        make:
+          type: string
+          nullable: true
+        year:
+          type: integer
+          format: int32
+        countryId:
+          type: string
+          format: uuid
+      additionalProperties: false

@@ -4,5 +4,6 @@ namespace TripsApp.Mongo.Interfaces
 {
     public interface IVehicleRepository : IRepository<Vehicle>
     {
+
     }
 }
