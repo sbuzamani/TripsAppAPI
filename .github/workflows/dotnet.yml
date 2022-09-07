@@ -20,7 +20,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build src/TripsApp.Api.sln --no-restore
+      run: dotnet build ./src/TripsApp.Api.sln --no-restore
     - name: Test
-      run: dotnet test --filter TestType!=Integration './src/TripsApp.Api.sln' --no-build --verbosity normal
+      run: dotnet test ./src/TripsApp.Api.sln --filter TestType!=Integration --no-build --verbosity normal
 
