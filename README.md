@@ -1,8 +1,8 @@
-#Trips App API V1
+# Trips App API V1
 
 Trips App Api is a REST API to track and aggregate trip data.
 
-##Get Started
+## Get Started
 1.	Installation process
 		Clone repository.
 		Restore NUGET Packages. 

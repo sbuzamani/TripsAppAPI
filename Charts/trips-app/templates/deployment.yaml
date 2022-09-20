@@ -44,8 +44,8 @@ spec:
              value: "TripsApp"
           livenessProbe:
             httpGet:
-              path: /health
-              port: http
+              path: /liveness
+              port: 80
             initialDelaySeconds: 0
             periodSeconds: 60
             timeoutSeconds: 1
@@ -53,7 +53,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: http
+              port: 80
             successThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
